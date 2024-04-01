@@ -6,13 +6,9 @@ DROP TABLE IF EXISTS Review;
 
 DROP TABLE IF EXISTS Pet;
 DROP TABLE IF EXISTS Customer;
-DROP TABLE IF EXISTS SitterSchedule;
-DROP TABLE IF EXISTS Sitter;
 
-DROP TABLE IF EXISTS TechnicianSchedule;
-DROP TABLE IF EXISTS Service;
-DROP TABLE IF EXISTS Technician;
-
+DROP TABLE IF EXISTS Provider;
+DROP TABLE IF EXISTS ProviderSchedule;
 
 
 CREATE TABLE Customer(
@@ -25,26 +21,6 @@ CREATE TABLE Customer(
     Number BIGINT(10)
 );
 
-CREATE TABLE Sitter(
-	SitterID INT NOT NULL PRIMARY KEY,
-    Username VARCHAR(100),
-    Password VARCHAR(64),
-    Name VARCHAR(32),
-    Address VARCHAR(255),
-    Email VARCHAR(64),
-    Number BIGINT(10),
-    PriceRate INT,
-    Rating INT
-);
-
-CREATE TABLE SitterSchedule(
-	ScheduleID INT NOT NULL PRIMARY KEY,
-    Day DATE,
-    StartTime DATETIME,
-    EndTime DATETIME,
-    SitterID INT,
-    FOREIGN KEY (SitterID) REFERENCES Sitter(SitterID)
-);
 
 CREATE TABLE Pet(
 	PetID INT NOT NULL PRIMARY KEY,
@@ -56,75 +32,58 @@ CREATE TABLE Pet(
     FOREIGN KEY (CustomerID) REFERENCES Customer(CustomerID)
 );
 
-CREATE TABLE Technician(
-	TechnicianID INT NOT NULL PRIMARY KEY,
+CREATE TABLE ProviderSchedule(
+	ScheduleID INT NOT NULL PRIMARY KEY,
+    Day DATE,
+    StartTime DATETIME,
+    EndTime DATETIME
+);
+
+CREATE TABLE Provider(
+	ProviderID INT NOT NULL PRIMARY KEY,
     Username VARCHAR(100),
     Password VARCHAR(64),
     Name VARCHAR(32),
     Address VARCHAR(255),
     Email VARCHAR(64),
     Number BIGINT(10),
+    Industry VARCHAR(64),
     Specialization VARCHAR(64),
     Company VARCHAR(64),
-    Rating INT
-);
-
-CREATE TABLE TechnicianSchedule(
-	ScheduleID INT NOT NULL PRIMARY KEY,
-    Day DATE,
-    StartTime DATETIME,
-    EndTime DATETIME,
-    TechnicianID INT,
-    FOREIGN KEY (TechnicianID) REFERENCES Technician(TechnicianID)
-);
-
-
-
-CREATE TABLE Service(
-	ServiceID INT NOT NULL PRIMARY KEY,
-    ServiceType VARCHAR(64),
     PriceRate INT,
-	TechnicianID INT,
-    FOREIGN KEY (TechnicianID) REFERENCES Technician(TechnicianID)
+    Rating INT,
+    ScheduleID INT,
+    FOREIGN KEY (ScheduleID) REFERENCES ProviderSchedule(ScheduleID)
 );
 
-
+CREATE TABLE Review (
+    ReviewID INT NOT NULL PRIMARY KEY,
+    ProviderID INT NOT NULL,
+    ServiceType VARCHAR(20), 
+    Rating INT, 
+    Comment TEXT, 
+    FOREIGN KEY (ProviderID) REFERENCES Provider(ProviderID)
+);
 
 CREATE TABLE PetAppointment(
-	ScheduleID INT NOT NULL PRIMARY KEY,
-    SitterID INT,
+	AppointmentID INT NOT NULL PRIMARY KEY,
+    ProviderID INT,
     PetID INT,
-    FOREIGN KEY (SitterID) REFERENCES Sitter(SitterID),
+    FOREIGN KEY (ProviderID) REFERENCES Provider(ProviderID),
     FOREIGN KEY (PetID) REFERENCES Pet(PetID),
     Status VARCHAR(32),
     BorrowDate DATETIME,
-    ReturnDate DATETIME,
-    Cost INT
+    ReturnDate DATETIME
 );
 
 
 CREATE TABLE NailAppointment(
-	ScheduleID INT NOT NULL PRIMARY KEY,
-    TechnicianID INT,
+	AppointmentID INT NOT NULL PRIMARY KEY,
+    ProviderID INT,
     CustomerID INT,
-    ServiceID INT,
-    FOREIGN KEY (ServiceID) REFERENCES Service(ServiceID),
-    FOREIGN KEY (TechnicianID) REFERENCES Technician(TechnicianID),
+    FOREIGN KEY (ProviderID) REFERENCES Provider(ProviderID),
     FOREIGN KEY (CustomerID) REFERENCES Customer(CustomerID),
     Status VARCHAR(32),
     BorrowDate DATETIME,
-    ReturnDate DATETIME,
-    Cost INT
+    ReturnDate DATETIME
 );
-
-
-
-SELECT * FROM Customer;
-SELECT * FROM Sitter;
-SELECT * FROM SitterSchedule;
-SELECT * FROM Technician;
-SELECT * FROM TechnicianSchedule;
-SELECT * FROM Service;
-SELECT * FROM Pet;
-SELECT * FROM PetAppointment;
-SELECT * FROM NailAppointment;
