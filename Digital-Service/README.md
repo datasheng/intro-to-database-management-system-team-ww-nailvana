@@ -1,5 +1,5 @@
 # Nailvana
-Repository for the Nailvana booking service
+Repository for the Nailvana booking service; 
 Current issues (backend):
   - User, Note tables still exist to prevent errors
   - No validation for forms
