@@ -16,13 +16,27 @@ auth = Blueprint("auth", __name__)
 
 @auth.route("/login", methods=["GET", "POST"])
 def login():
+    if current_user.is_authenticated:
+        return redirect(url_for("views.home"))
+
     form = LoginForm()
 
+    # HEEEEEEEEEEEEEEELP
     if form.validate_on_submit():
-        flash("Logged In!", "success")
-        return redirect(url_for("views.home"))
-    else:
-        flash("Invalid username or password", "warning")
+        provider = Provider.query.filter_by(Email=form.email.data).first()
+        customer = Customer.query.filter_by(Email=form.email.data).first()
+
+        if provider and check_password_hash(provider.Password, form.password.data):
+            login_user(provider, remember=True)
+            flash("Logged In!", "success")
+            return redirect(url_for("views.home"))
+
+        elif customer and check_password_hash(customer.Password, form.password.data):
+            login_user(customer, remember=True)
+            flash("Logged In!", "success")
+            return redirect(url_for("views.home"))
+        else:
+            flash("Invalid username or password", "error")
 
     return render_template("login.html", form=form, user=current_user)
 
