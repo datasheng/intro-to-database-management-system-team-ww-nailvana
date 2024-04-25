@@ -46,8 +46,8 @@ class SignUpForm(FlaskForm):
     # if user:
     #     flash("Email already exists", category="error")
     def validate_email(self, email):
-        provider = Provider.query.filter_by(Email=email).first()
-        customer = Customer.query.filter_by(Email=email).first()
+        provider = Provider.query.filter_by(Email=email.data).first()
+        customer = Customer.query.filter_by(Email=email.data).first()
 
         if provider or customer:
             raise ValidationError(
