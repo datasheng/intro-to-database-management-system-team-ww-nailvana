@@ -41,10 +41,6 @@ class SignUpForm(FlaskForm):
 
     submit = SubmitField("Sign Up")
 
-    # TODO: Custom validators
-    # user = User.query.filter_by(email=email).first()
-    # if user:
-    #     flash("Email already exists", category="error")
     def validate_email(self, email):
         provider = Provider.query.filter_by(Email=email.data).first()
         customer = Customer.query.filter_by(Email=email.data).first()
@@ -52,6 +48,15 @@ class SignUpForm(FlaskForm):
         if provider or customer:
             raise ValidationError(
                 "There is an account with that email. Please choose another or log in"
+            )
+
+    def validate_username(self, username):
+        provider = Provider.query.filter_by(Username=username.data).first()
+        customer = Customer.query.filter_by(Username=username.data).first()
+
+        if provider or customer:
+            raise ValidationError(
+                "There is an account with that username. Please choose another or log in"
             )
 
 
