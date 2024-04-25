@@ -48,10 +48,9 @@ class ProviderSchedule(db.Model):
 class Provider(db.Model, UserMixin):
     __tablename__ = "Provider"
 
+    # Random IDs or no; integrity error
     ProviderID = db.Column(db.Integer, primary_key=True)
-    ProviderSchedule = db.Column(
-        db.Integer, db.ForeignKey("ProviderSchedule.ScheduleID")
-    )
+    ScheduleID = db.Column(db.Integer, db.ForeignKey("ProviderSchedule.ScheduleID"))
     Username = db.Column(db.VARCHAR(100))
     Password = db.Column(db.VARCHAR(150))
     Name = db.Column(db.VARCHAR(32))
@@ -85,7 +84,7 @@ class Customer(db.Model, UserMixin):
 
     CustomerID = db.Column(db.Integer, primary_key=True)
     Username = db.Column(db.VARCHAR(100))
-    Password = db.Column(db.VARCHAR(300))
+    Password = db.Column(db.VARCHAR(150))
     Name = db.Column(db.VARCHAR(32))
     Address = db.Column(db.VARCHAR(255))
     Email = db.Column(db.VARCHAR(64))

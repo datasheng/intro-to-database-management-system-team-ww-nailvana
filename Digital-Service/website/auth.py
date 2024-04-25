@@ -21,7 +21,7 @@ def login():
 
     form = LoginForm()
 
-    # HEEEEEEEEEEEEEEELP
+    # HEEEEEEEEEEEEEEELP - Any optimizers?
     if form.validate_on_submit():
         provider = Provider.query.filter_by(Email=form.email.data).first()
         customer = Customer.query.filter_by(Email=form.email.data).first()

@@ -39,6 +39,8 @@ class SignUpForm(FlaskForm):
         validators=[DataRequired()],
     )
 
+    submit = SubmitField("Sign Up")
+
     # TODO: Custom validators
     # user = User.query.filter_by(email=email).first()
     # if user:
@@ -51,8 +53,6 @@ class SignUpForm(FlaskForm):
             raise ValidationError(
                 "There is an account with that email. Please choose another or log in"
             )
-
-    submit = SubmitField("Sign Up")
 
 
 class LoginForm(FlaskForm):
