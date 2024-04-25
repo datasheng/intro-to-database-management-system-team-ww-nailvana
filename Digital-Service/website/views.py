@@ -8,7 +8,6 @@ import json
 # Blueprint: many routes defined within
 views = Blueprint("views", __name__)
 
-
 @views.route("/", methods=["GET", "POST"])
 @login_required
 def home():
@@ -25,6 +24,13 @@ def home():
 
     return render_template("home.html", user=current_user)
 
+@views.route("/providers")
+def providers():
+    return render_template("providers.html", user=current_user)
+
+@views.route("/provider")
+def provider():
+    return render_template("provider.html", user=current_user)
 
 @views.route("/delete-note", methods=["POST"])
 def delete_note():

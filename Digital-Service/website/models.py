@@ -85,7 +85,7 @@ class Customer(db.Model, UserMixin):
 
     CustomerID = db.Column(db.Integer, primary_key=True)
     Username = db.Column(db.VARCHAR(100))
-    Password = db.Column(db.VARCHAR(150))
+    Password = db.Column(db.VARCHAR(300))
     Name = db.Column(db.VARCHAR(32))
     Address = db.Column(db.VARCHAR(255))
     Email = db.Column(db.VARCHAR(64))
