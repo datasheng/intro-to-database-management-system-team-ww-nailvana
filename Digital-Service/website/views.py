@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, flash, jsonify
 from flask_login import login_required, current_user
-from .models import Note
+from .models import *
 from . import db
 import json
 
@@ -24,13 +24,23 @@ def home():
 
     return render_template("home.html", user=current_user)
 
+# @views.route("/providers")
+# def providers():
+#     return render_template("providers.html", user=current_user)
+
 @views.route("/providers")
 def providers():
-    return render_template("providers.html", user=current_user)
+    providers = Provider.query.all()  
+    return render_template("providers.html", user=current_user, providers=providers)
 
-@views.route("/provider")
-def provider():
-    return render_template("provider.html", user=current_user)
+@views.route("/provider/<int:provider_id>", methods=['POST', 'GET'])
+def provider(provider_id):
+    provider = Provider.query.get_or_404(provider_id)
+    return render_template("provider.html", user=current_user, provider=provider)
+
+@views.route("/appointmentbooked", methods=['POST', 'GET'])
+def appointmentbooked():
+    return render_template("appointmentbooked.html", user=current_user, providers=providers)
 
 @views.route("/delete-note", methods=["POST"])
 def delete_note():
