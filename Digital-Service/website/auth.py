@@ -25,6 +25,7 @@ def login():
     if form.validate_on_submit():
         provider = Provider.query.filter_by(Email=form.email.data).first()
         customer = Customer.query.filter_by(Email=form.email.data).first()
+        print(provider, customer)
 
         if provider and check_password_hash(provider.Password, form.password.data):
             login_user(provider, remember=True)
@@ -80,3 +81,31 @@ def sign_up():
         flash("Account created.", category="success")
         return redirect(url_for("views.home"))
     return render_template("signup.html", user=current_user, form=form)
+
+def current_user_logged_in():
+    provider = Provider.query.filter_by(Email = current_user.Email).first()
+    customer = Customer.query.filter_by(Email = current_user.Email).first()
+    if provider is not None:
+        print(current_user.Email) 
+        return "provider"
+    elif customer is not None: 
+        print(current_user.Email)
+        return "customer"
+    else:
+        return None
+
+@auth.route("/account", methods=["GET", "POST"])
+def account():
+    user_type = current_user_logged_in()
+
+    if current_user.is_authenticated:
+        if user_type == "provider":
+            provider = Provider.query.filter_by(Email = current_user.Email).first()
+            #return current_user.Email
+            return render_template("account.html", user=current_user, logged_in=provider)
+        if user_type == "customer":
+            customer = Customer.query.filter_by(Email = current_user.Email).first()
+            #return current_user.Email
+            return render_template("account.html", user=current_user, logged_in=customer)
+        else: 
+            return "Please log in to access this page", 401

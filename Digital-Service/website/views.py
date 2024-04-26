@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, request, flash, jsonify
 from flask_login import login_required, current_user
 from .models import *
+from .auth import *
 from . import db
 import json
 
@@ -40,7 +41,7 @@ def provider(provider_id):
 
 @views.route("/appointmentbooked", methods=['POST', 'GET'])
 def appointmentbooked():
-    return render_template("appointmentbooked.html", user=current_user, providers=providers)
+    return render_template("appointmentbooked.html", user=current_user)
 
 @views.route("/delete-note", methods=["POST"])
 def delete_note():
