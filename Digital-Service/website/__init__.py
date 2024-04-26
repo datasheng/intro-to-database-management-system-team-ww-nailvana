@@ -35,9 +35,9 @@ def create_app():
 
     @login_manager.user_loader
     def load_user(id):
-        user = Provider.query.get(int(id))
+        user = Provider.query.filter_by(Email=id).first()
         if user is None:
-            user = Customer.query.get(int(id))
+            user = Customer.query.filter_by(Email=id).first()
         return user
 
     return app

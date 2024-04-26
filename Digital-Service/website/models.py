@@ -68,7 +68,7 @@ class Provider(db.Model, UserMixin):
     Reviews = db.relationship("Review", backref="provider", lazy=True)
 
     def get_id(self):
-        return self.ProviderID
+        return self.Email
 
     def to_json(self):
         return {
@@ -95,7 +95,7 @@ class Customer(db.Model, UserMixin):
 
     # override for login_user
     def get_id(self):
-        return self.CustomerID
+        return self.Email
 
     def to_json(self):
         return {
