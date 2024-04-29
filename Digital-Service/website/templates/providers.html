@@ -1,0 +1,108 @@
+{% extends "base.html" %} {% block title %}Providers{% endblock %} {% block content
+%}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Provider List</title>
+    <style>
+        /* Style for the landing page */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 10 px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .provider-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .provider-item {
+            background-color: #f9f9f9;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease;
+            display: block;
+            text-decoration: none;
+        }
+
+        .provider-item:hover {
+            background-color: #eaeaea;
+        }
+
+        .provider-name {
+            font-weight: bold;
+            display: block;
+        }
+
+        .provider-description {
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<!-- <body>
+        <div class="container">
+            <h1>Providers</h1>
+            <ul class="provider-list">
+                <a href="/provider" class="provider-item">
+                    <li>
+                        <span class="provider-name">Madison Smith</span>
+                        <p class="provider-description">Specializes in Gel Manicure</p>
+                    </li>
+                </a>
+                <a href="/provider" class="provider-item">
+                    <li>
+                        <span class="provider-name">Emily Johnson</span>
+                        <p class="provider-description">Specializes in Acrylic Overlay</p>
+                    </li>
+                </a>
+                <a href="/provider" class="provider-item">
+                    <li>
+                        <span class="provider-name">Julia Lee</span>
+                        <p class="provider-description">Specializes in Basic Manicure</p>
+                    </li>
+                </a>
+            </ul>
+        </div>
+    </body>  -->
+
+<body>
+    <div class="container">
+        <h1>Providers</h1>
+        <ul class="provider-list">
+            {% for provider in providers %}
+            <a href="/provider/{{ provider.ProviderID }}" class="provider-item">
+                <li>
+                    <span class="provider-name">{{ provider.Name }}</span>
+                    <p class="provider-description">{{ provider.Specialization }}</p>
+                </li>
+            </a>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+
+</html>
+
+{% endblock %}

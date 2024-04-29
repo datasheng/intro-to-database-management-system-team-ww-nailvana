@@ -1,0 +1,311 @@
+{% extends "base.html" %} {% block title %}Provider{% endblock %} {% block content
+%}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appointment Booking Form</title>
+    <style>
+        /* Style for the form */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+
+        }
+
+        form {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+            padding-bottom: 55px;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            float: right;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        /* Style for the schedule table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        body {
+            padding-bottom: 100px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Mock schedule table -->
+    <!-- <h2>Schedule</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th></th> 
+                    <th>Sunday</th>
+                    <th>Monday</th>
+                    <th>Tuesday</th>
+                    <th>Wednesday</th>
+                    <th>Thursday</th>
+                    <th>Friday</th>
+                    <th>Saturday</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>9:00 AM</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>10:00 AM</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>11:00 AM</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>12:00 PM</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>1:00 PM</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>2:00 PM</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>3:00 PM</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>4:00 PM</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>5:00 PM</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table> -->
+
+    <h2>Schedule</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Sunday</th>
+                <th>Monday</th>
+                <th>Tuesday</th>
+                <th>Wednesday</th>
+                <th>Thursday</th>
+                <th>Friday</th>
+                <th>Saturday</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>2:00 PM - 4:00 PM</td>
+                <td>10:00 AM - 12:00 PM, 2:00 PM - 4:00 PM</td>
+                <td>1:00 PM - 3:00 PM</td>
+                <td>9:00 AM - 11:00 AM, 3:00 PM - 5:00 PM</td>
+                <td>11:00 AM - 1:00 PM, 4:00 PM - 6:00 PM</td>
+                <td>2:00 PM - 4:00 PM</td>
+                <td>10:00 AM - 12:00 PM, 2:00 PM - 4:00 PM</td>
+            </tr>
+        </tbody>
+    </table>
+
+
+    <!-- Appointment booking form -->
+
+    <style>
+        textarea#description {
+            resize: vertical;
+            /* Allow vertical resizing only */
+            min-height: 100px;
+            /* Set a minimum height */
+            width: 100%;
+            /* Set width to 100% */
+        }
+    </style>
+
+    <!-- <form action="#" method="post">
+        <h2> Booking Form</h2>
+        <label for="name">Full Name:</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="description">Description:</label>
+        <textarea id="description" name="description" rows="4" required></textarea>
+
+        <label for="appointment">Select Appointment Type:</label>
+        <select id="appointment" name="appointment" required>
+            <option value="">Select</option>
+            <option value="Consultation">Consultation</option>
+            <option value="Manicure">Manicure</option>
+            <option value="Treatment">Treatment</option>
+            <option value="Other">Other</option>
+        </select>
+
+        <label for="time">Select Appointment Time:</label>
+        <select id="time" name="time" required>
+            <option value="">Select</option>
+            <option value="09:00 AM">09:00 AM</option>
+            <option value="10:00 AM">10:00 AM</option>
+            <option value="11:00 AM">11:00 AM</option>
+            <option value="12:00 PM">12:00 PM</option>
+            <option value="01:00 PM">01:00 PM</option>
+            <option value="02:00 PM">02:00 PM</option>
+            <option value="03:00 PM">03:00 PM</option>
+            <option value="04:00 PM">04:00 PM</option>
+        </select>
+
+        <input type="submit" value="Book Appointment">
+    </form> -->
+
+    <form action="/appointmentbooked" method="post" onsubmit="return confirmSubmit()">
+        <h2>Booking Form</h2>
+        <label for="name">Full Name:</label>
+        <input type="text" id="name" name="name" required>
+    
+        <label for="description">Description:</label>
+        <textarea id="description" name="description" rows="4" required></textarea>
+    
+        <label for="appointment">Select Appointment Type:</label>
+        <select id="appointment" name="appointment" required>
+            <option value="">Select</option>
+            <option value="Consultation">Consultation</option>
+            <option value="Manicure">Manicure</option>
+            <option value="Treatment">Treatment</option>
+            <option value="Other">Other</option>
+        </select>
+    
+        <label for="time">Select Appointment Time:</label>
+        <select id="time" name="time" required>
+            <option value="">Select</option>
+            <option value="09:00 AM">09:00 AM</option>
+            <option value="10:00 AM">10:00 AM</option>
+            <option value="11:00 AM">11:00 AM</option>
+            <option value="12:00 PM">12:00 PM</option>
+            <option value="01:00 PM">01:00 PM</option>
+            <option value="02:00 PM">02:00 PM</option>
+            <option value="03:00 PM">03:00 PM</option>
+            <option value="04:00 PM">04:00 PM</option>
+        </select>
+    
+        <input type="submit" value="Book Appointment">
+    </form>
+    
+    <script>
+        function confirmSubmit() {
+            return confirm("Are you sure you want to book this appointment?");
+        }
+    </script>
+    
+
+</body>
+
+</html>
+{% endblock %}

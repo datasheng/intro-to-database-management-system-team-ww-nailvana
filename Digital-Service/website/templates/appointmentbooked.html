@@ -1,0 +1,46 @@
+{% extends "base.html" %} {% block title %}Account{% endblock %} {% block content
+    %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appointment Booked</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        .container {
+            margin-top: 100px;
+        }
+        h2 {
+            color: #4CAF50;
+        }
+        p {
+            color: #333;
+        }
+        .home-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Appointment Booked Successfully!</h2>
+        <p>Thank you for booking your appointment with us.</p>
+        <p>We look forward to seeing you.</p>
+        <a href="/" class="home-button">Home</a>
+    </div>
+</body>
+</html>
+
+
+{% endblock %} 

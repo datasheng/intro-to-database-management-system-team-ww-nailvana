@@ -48,12 +48,11 @@ class ProviderSchedule(db.Model):
 class Provider(db.Model, UserMixin):
     __tablename__ = "Provider"
 
+    # Random IDs or no; integrity error
     ProviderID = db.Column(db.Integer, primary_key=True)
-    ProviderSchedule = db.Column(
-        db.Integer, db.ForeignKey("ProviderSchedule.ScheduleID")
-    )
+    ScheduleID = db.Column(db.Integer, db.ForeignKey("ProviderSchedule.ScheduleID"))
     Username = db.Column(db.VARCHAR(100))
-    Password = db.Column(db.VARCHAR(64))
+    Password = db.Column(db.VARCHAR(150))
     Name = db.Column(db.VARCHAR(32))
     Industry = db.Column(db.VARCHAR(64))  # pet || nail
     Address = db.Column(db.VARCHAR(255))
@@ -69,7 +68,7 @@ class Provider(db.Model, UserMixin):
     Reviews = db.relationship("Review", backref="provider", lazy=True)
 
     def get_id(self):
-        return self.ProviderID
+        return self.Email
 
     def to_json(self):
         return {
@@ -85,7 +84,7 @@ class Customer(db.Model, UserMixin):
 
     CustomerID = db.Column(db.Integer, primary_key=True)
     Username = db.Column(db.VARCHAR(100))
-    Password = db.Column(db.VARCHAR(64))
+    Password = db.Column(db.VARCHAR(150))
     Name = db.Column(db.VARCHAR(32))
     Address = db.Column(db.VARCHAR(255))
     Email = db.Column(db.VARCHAR(64))
@@ -96,7 +95,7 @@ class Customer(db.Model, UserMixin):
 
     # override for login_user
     def get_id(self):
-        return self.CustomerID
+        return self.Email
 
     def to_json(self):
         return {
