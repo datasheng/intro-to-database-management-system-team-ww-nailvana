@@ -129,3 +129,21 @@
   border-radius: 8px;
   cursor: pointer;
 }
+
+/* blog details page */
+.appointment-details h2 {
+  font-size: 30px;
+  color: #663399;
+  margin-bottom: 10px;
+}
+.appointment-details div {
+  margin: 20px 0;
+}
+.appointment-details button {
+  background: #6666cc;
+  color: #fff;
+  border: 0;
+  padding: 8px;
+  border-radius: 8px;
+  cursor: pointer;
+}
