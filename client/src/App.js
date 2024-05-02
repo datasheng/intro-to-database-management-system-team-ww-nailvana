@@ -2,9 +2,9 @@ import Navbar from './Navbar';
 import Home from './Home';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Schedule from './Schedule';
-import AppointmentsDetail from './AppointmentsDetail';
 import Login from './Login';
 import AppointmentDetails from './AppointmentDetails';
+import AppointmentsL from './AppointmentsL';
 
 function App() {
 
@@ -18,7 +18,7 @@ function App() {
               <Home />
             </Route>
             <Route exact path="/appointments">
-              <AppointmentsDetail />
+              <AppointmentsL />
             </Route>
             <Route exact path="/schedule">
               <Schedule />

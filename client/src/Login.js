@@ -15,7 +15,6 @@ const Login = () => {
                 <input 
                     type="email" 
                     id="customerEmail"
-                    pattern=".+@example\.com" 
                     size="30"                 
                 />
 

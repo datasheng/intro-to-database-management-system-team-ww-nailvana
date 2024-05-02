@@ -13,7 +13,7 @@ const AppointmentList = ({ appointments, title /*, handleCancel*/ }) => {
                     <Link to={`/appointments/${appointment.id}`}>
                         {}
                         <h2>{ appointment.customer }</h2>   
-                        <p>Taken services with { appointment.provider }</p>  
+                        <p>Taken services with { appointment.provider }</p> 
                         {/* <button onClick={() => handleCancel(appointment.id)}>Canccel Appointment</button>*/}
                     </Link>
                 </div>    

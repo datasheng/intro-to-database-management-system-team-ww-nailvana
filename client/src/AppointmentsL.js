@@ -2,7 +2,7 @@ import { useHistory } from "react-router";
 import AppointmentList from "./AppointmentList";
 import useFetch from "./useFetch";
 
-const AppointmentsDetail = () => {
+const AppointmentsL = () => {
     const { data: appointments, isPending, error } = useFetch('http://localhost:8000/appointments');
     //const [name, setName] = useState('jennifer');
     
@@ -14,7 +14,7 @@ const AppointmentsDetail = () => {
     
 
     return (
-        <div className="appointments-detail">
+        <div className="appointments-l">
             { error && <div>{ error }</div>}
             { isPending && <div>Loading...</div> }
             {appointments && 
@@ -25,4 +25,4 @@ const AppointmentsDetail = () => {
     );
 }
  
-export default AppointmentsDetail;
+export default AppointmentsL;
