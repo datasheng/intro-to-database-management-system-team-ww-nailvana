@@ -9,6 +9,7 @@ import json
 # Blueprint: many routes defined within
 views = Blueprint("views", __name__)
 
+
 @views.route("/", methods=["GET", "POST"])
 @login_required
 def home():
@@ -25,23 +26,31 @@ def home():
 
     return render_template("home.html", user=current_user)
 
+
 # @views.route("/providers")
 # def providers():
 #     return render_template("providers.html", user=current_user)
 
+
 @views.route("/providers")
 def providers():
-    providers = Provider.query.all()  
+    providers = Provider.query.all()
     return render_template("providers.html", user=current_user, providers=providers)
 
-@views.route("/provider/<int:provider_id>", methods=['POST', 'GET'])
+
+@views.route("/provider/<int:provider_id>", methods=["POST", "GET"])
 def provider(provider_id):
     provider = Provider.query.get_or_404(provider_id)
-    return render_template("provider.html", user=current_user, provider=provider)
+    schedule = ProviderSchedule.query.filter_by(ProviderID=provider_id).all()
+    return render_template(
+        "provider.html", user=current_user, provider=provider, schedule=schedule
+    )
 
-@views.route("/appointmentbooked", methods=['POST', 'GET'])
+
+@views.route("/appointmentbooked", methods=["POST", "GET"])
 def appointmentbooked():
     return render_template("appointmentbooked.html", user=current_user)
+
 
 @views.route("/delete-note", methods=["POST"])
 def delete_note():

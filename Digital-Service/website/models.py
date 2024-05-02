@@ -26,31 +26,11 @@ class Note(db.Model):
         }
 
 
-class ProviderSchedule(db.Model):
-    __tablename__ = "ProviderSchedule"  # simplifies relationship declarations
-
-    ScheduleID = db.Column(db.Integer, primary_key=True)
-    Day = db.Column(db.DATE)
-    StartTime = db.Column(db.DATETIME)
-    EndTime = db.Column(db.DATETIME)
-
-    Providers = db.relationship("Provider", backref="Schedule", lazy=True)
-
-    def to_json(self):
-        return {
-            "ScheduleID": self.ScheduleID,
-            "Day": self.Day,
-            "Start": self.StartTime,
-            "End": self.EndTime,
-        }
-
-
 class Provider(db.Model, UserMixin):
     __tablename__ = "Provider"
 
     # Random IDs or no; integrity error
     ProviderID = db.Column(db.Integer, primary_key=True)
-    ScheduleID = db.Column(db.Integer, db.ForeignKey("ProviderSchedule.ScheduleID"))
     Username = db.Column(db.VARCHAR(100))
     Password = db.Column(db.VARCHAR(150))
     Name = db.Column(db.VARCHAR(32))
@@ -63,6 +43,7 @@ class Provider(db.Model, UserMixin):
     Specialization = db.Column(db.VARCHAR(64))
     Company = db.Column(db.VARCHAR(64))
 
+    Schedules = db.relationship("ProviderSchedule", backref="Provider", lazy=True)
     PetAppointments = db.relationship("PetAppointment", backref="Provider", lazy=True)
     NailAppointments = db.relationship("NailAppointment", backref="Provider", lazy=True)
     Reviews = db.relationship("Review", backref="provider", lazy=True)
@@ -76,6 +57,24 @@ class Provider(db.Model, UserMixin):
             "username": self.Username,
             "email": self.Email,
             "industry": self.Industry,
+        }
+
+
+class ProviderSchedule(db.Model):
+    __tablename__ = "ProviderSchedule"  # simplifies relationship declarations
+
+    ScheduleID = db.Column(db.Integer, primary_key=True)
+    ProviderID = db.Column(db.Integer, db.ForeignKey("Provider.ProviderID"))
+    StartTime = db.Column(db.DATETIME)
+    EndTime = db.Column(db.DATETIME)
+    Day = db.Column(db.VARCHAR(10))
+
+    def to_json(self):
+        return {
+            "ScheduleID": self.ScheduleID,
+            "Day": self.Day,
+            "Start": self.StartTime,
+            "End": self.EndTime,
         }
 
 
