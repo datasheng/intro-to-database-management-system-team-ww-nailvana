@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, flash, jsonify
+from flask import Blueprint, render_template, request, flash, jsonify, Flask
 from flask_login import login_required, current_user
 from datetime import datetime, timedelta
 from .models import *
@@ -16,16 +16,16 @@ views = Blueprint("views", __name__)
 @views.route("/", methods=["GET", "POST"])
 @login_required
 def home():
-    if request.method == "POST":
-        note = request.form.get("note")
+    # if request.method == "POST":
+    #     note = request.form.get("note")
 
-        if len(note) < 1:
-            flash("Note is too short!", category="error")
-        else:
-            new_note = Note(data=note, user_id=current_user.id)
-            db.session.add(new_note)
-            db.session.commit()
-            flash("Note added!", category="success")
+    #     if len(note) < 1:
+    #         flash("Note is too short!", category="error")
+    #     else:
+    #         new_note = Note(data=note, user_id=current_user.id)
+    #         db.session.add(new_note)
+    #         db.session.commit()
+    #         flash("Note added!", category="success")
 
     return render_template("home.html", user=current_user)
 
@@ -90,8 +90,19 @@ def providerdata():
 @views.route("/customer-data")
 def customerdata():
     customerNames = sql_customer()
-    sql_stored_procedure()
-    # return customerNames
-    return render_template(
-        "sql-customer-data.html", user=current_user, customerNames=customerNames
-    )
+    #return customerNames
+    return render_template("sql-customer-data.html", user=current_user, customerNames=customerNames)
+
+@views.route('/test')
+def test():
+     return render_template("test.html", user=current_user)
+
+@views.route('/test', methods = ["POST"])
+def getvalue():
+    start_time = request.form['start_time']
+    end_time = request.form['end_time']
+    args = []
+    args.append((start_time))
+    args.append((end_time))
+    results = check_availability(args)
+    return render_template("pass.html", user=current_user, start_time=start_time, end_time=end_time, results = results)
