@@ -4,6 +4,7 @@ from .models import *
 from .auth import *
 from . import db
 import json
+from .createDB import *
 
 # standard routes for users
 # Blueprint: many routes defined within
@@ -58,3 +59,16 @@ def delete_note():
             db.session.commit()
 
     return jsonify({})
+
+
+@views.route('/provider-data')
+def providerdata():
+    sql_provider()
+    return render_template("sql-provider-data.html", user=current_user)
+
+@views.route('/customer-data')
+def customerdata():
+    customerNames = sql_customer()
+    sql_stored_procedure()
+    #return customerNames
+    return render_template("sql-customer-data.html", user=current_user, customerNames=customerNames)
