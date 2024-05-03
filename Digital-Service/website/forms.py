@@ -108,4 +108,33 @@ class AccountForm(FlaskForm):
             )
 
 
+class BookingForm(FlaskForm):
+    name = StringField("Full Name:", validators=[DataRequired()])
+    """ description = TextAreaField("Description:")
+     type = SelectField("Select Appointment Type:",
+        choices=[
+            ("", "Select"),
+            ("consult", "Consultation"),
+            ("mani", "Manicure")
+            ("treat", "Treatment"),
+            ("other", "Other")]) """
+    start_time = SelectField(
+        "Select Appointment Time",
+        choices=[
+            ("09:00", "9:00 AM"),
+            ("10:00", "10:00 AM"),
+            ("11:00", "11:00 AM"),
+            ("12:00", "12:00 PM"),
+            ("13:00", "1:00 PM"),
+            ("14:00", "2:00 PM"),
+            ("15:00", "3:00 PM"),
+            ("16:00", "4:00 PM"),
+            ("17:00", "5:00 PM"),
+            ("18:00", "6:00 PM"),
+        ],
+        validators=[DataRequired()],
+    )
+    submit = SubmitField("Book Appointment")
+
+
 # TODO: Review form

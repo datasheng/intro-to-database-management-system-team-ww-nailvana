@@ -27,11 +27,6 @@ def home():
     return render_template("home.html", user=current_user)
 
 
-# @views.route("/providers")
-# def providers():
-#     return render_template("providers.html", user=current_user)
-
-
 @views.route("/providers")
 def providers():
     providers = Provider.query.all()
