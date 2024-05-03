@@ -124,8 +124,7 @@
             }
         </style>
     
-    
-    <!-- TODO: Make Booking Form -->
+    {% if user.is_authenticated %}
         <form action="/appointmentbooked" method="post" onsubmit="return confirmSubmit()">
             <h2>Booking Form</h2>
             <label for="name">Full Name:</label>
@@ -158,6 +157,7 @@
         
             <input type="submit" value="Book Appointment">
         </form>
+    {% endif %}
         
         <script>
             function confirmSubmit() {

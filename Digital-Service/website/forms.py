@@ -17,6 +17,7 @@ from wtforms.validators import (
     ValidationError,
 )
 from .models import Provider, Customer
+from datetime import datetime
 from werkzeug.security import check_password_hash, generate_password_hash
 
 
@@ -135,6 +136,13 @@ class BookingForm(FlaskForm):
         validators=[DataRequired()],
     )
     submit = SubmitField("Book Appointment")
+
+    def get_datetime(self, date):
+        selected_time = self.start_time.data
+        appointment_datetime = datetime.strptime(
+            f"{date} {selected_time}", "%Y-%m-%d %I:%M"
+        )
+        return appointment_datetime
 
 
 # TODO: Review form
