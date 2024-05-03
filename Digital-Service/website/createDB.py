@@ -74,22 +74,49 @@ def check_availability(args):
         database = "catcare"
     )
     results = []
-    formatted_results = []
+    #formatted_results = []
     mycursor = mydb.cursor()
     mycursor.callproc("check_availability", args)
     for result in mycursor.stored_results():
         #print(result.fetchall())
         results.append(result.fetchall())
-    for result in results: 
-        for i in result:
-            formatted_results.append(i) 
-            # for x in i:
-            #     formatted_results += (f'{x} ')
-            # formatted_results += "\n"
-    #myresult = mycursor.fetchall()
+    # for result in results: 
+    #     for i in result:
+    #         formatted_results.append(i) 
+    #         # for x in i:
+    #         #     formatted_results += (f'{x} ')
+    #         # formatted_results += "\n"
+    # #myresult = mycursor.fetchall()
     mydb.close()  # Close the database connection
     #print (formatted_results)
-    return (formatted_results)
+    return results
+
+
+def check_provider(args):
+    mydb = mysql.connector.connect(
+        host="localhost",
+        user="root",
+        password="databases336",
+        port = 3306, 
+        database = "catcare"
+    )
+    results = []
+    #formatted_results = []
+    mycursor = mydb.cursor()
+    mycursor.callproc("check_provider", args)
+    for result in mycursor.stored_results():
+        #print(result.fetchall())
+        results.append(result.fetchall())
+    # for result in results: 
+    #     for i in result:
+    #         formatted_results.append(i) 
+    #         # for x in i:
+    #         #     formatted_results += (f'{x} ')
+    #         # formatted_results += "\n"
+    # #myresult = mycursor.fetchall()
+    mydb.close()  # Close the database connection
+    #print (formatted_results)
+    return results
 
 
 # # args = ('2024-05-01 13:00:00', '2024-05-01 16:30:00')
