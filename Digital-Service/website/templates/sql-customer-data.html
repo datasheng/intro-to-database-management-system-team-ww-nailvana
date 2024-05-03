@@ -1,0 +1,79 @@
+{% extends "base.html" %} {% block title %}Customer Names{% endblock %} {% block content
+  %}
+  <!DOCTYPE html>
+  <html lang="en">
+  
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Customer List</title>
+      <style>
+          /* Style for the landing page */
+          body {
+              font-family: Arial, sans-serif;
+              background-color: #f4f4f4;
+              margin: 0;
+              padding: 0;
+          }
+  
+          .container {
+              max-width: 800px;
+              margin: 10 px auto;
+              padding: 20px;
+              background-color: #ffffff;
+              border-radius: 5px;
+              box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+          }
+  
+          h1 {
+              text-align: center;
+              margin-bottom: 20px;
+          }
+  
+          .provider-list {
+              list-style-type: none;
+              padding: 0;
+              margin: 0;
+          }
+  
+          .provider-item {
+              background-color: #f9f9f9;
+              padding: 10px;
+              margin-bottom: 10px;
+              border-radius: 5px;
+              box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.1);
+              transition: background-color 0.3s ease;
+              display: block;
+              text-decoration: none;
+          }
+  
+          .provider-item:hover {
+              background-color: #eaeaea;
+          }
+  
+          .provider-name {
+              font-weight: bold;
+              display: block;
+          }
+  
+          .provider-description {
+              margin-top: 5px;
+          }
+      </style>
+  </head>
+
+  
+  <body>
+      <div class="container">
+          <h1>Customers</h1>
+          <ul class="provider-list">
+              {% for customer in customerNames %}
+                      <span class="provider-name">{{ customer }}</span>
+              {% endfor %}
+          </ul>
+      </div>
+  </body>
+
+  </html>
+  
+  {% endblock %}
