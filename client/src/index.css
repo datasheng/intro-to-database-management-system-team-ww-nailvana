@@ -66,22 +66,22 @@
 }
 
 
-/* login sign up form */
-.login {
+/* signup sign up form */
+.signup {
   max-width: 400px;
   margin: 0 auto;
   text-align: center;
 }
-.login label {
+.signup label {
   text-align: left;
   display: block;
 }
-.login h2 {
+.signup h2 {
   font-size: 20px;
   color: #663399;
   margin-bottom: 30px;
 }
-.login input, .login textarea, .login select {
+.signup input, .signup textarea, .signup select {
   width: 100%;
   padding: 6px 10px;
   margin: 10px 0;
@@ -89,7 +89,7 @@
   box-sizing: border-box;
   display: block;
 }
-.login button {
+.signup button {
   background: #6666cc;
   color: #fff;
   border: 0;

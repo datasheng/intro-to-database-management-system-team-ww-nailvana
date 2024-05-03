@@ -8,8 +8,7 @@ const Navbar = () => {
             <Link to="/">Home</Link>
             <Link to="/appointments">Appointments</Link>
             <Link to="/schedule">Schedule</Link>
-            <Link to="/">About</Link>
-            <Link to="/login" style={{
+            <Link to="/signup" style={{
                 color: "white",
                 backgroundColor: '#6666cc',
                 borderRadius: '8px'
