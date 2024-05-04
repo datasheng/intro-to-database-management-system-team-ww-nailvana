@@ -75,7 +75,6 @@ def check_availability(args):
     )
     results = []
     # formatted_results = []
-    # formatted_results = []
     mycursor = mydb.cursor()
     mycursor.callproc("check_availability", args)
     for result in mycursor.stored_results():
@@ -122,6 +121,3 @@ def check_provider(args):
 
 # # args = ('2024-05-01 13:00:00', '2024-05-01 16:30:00')
 # # check_availability(args)
-
-# args = ['2024-05-01T15:00', '2024-05-01T16:30']
-# check_availability(args)

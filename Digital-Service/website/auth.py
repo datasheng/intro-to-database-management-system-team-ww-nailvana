@@ -8,7 +8,7 @@ from flask_login import (
     logout_user,
     current_user,
 )
-from website.forms import SignUpForm, LoginForm, AccountForm
+from website.forms import SignUpForm, LoginForm, AccountForm, ProviderForm
 
 # routes related to authorization
 auth = Blueprint("auth", __name__)
@@ -115,3 +115,23 @@ def account():
         return redirect(url_for("auth.account"))
 
     return render_template("account.html", user=current_user, form=form)
+
+
+@auth.route("/provider_profile", methods=["GET", "POST"])
+@login_required
+def provider_profile():
+    form = ProviderForm()
+
+    # number, address --> account route?
+    if form.validate_on_submit():
+        current_user.Industry = form.industry.data
+        current_user.Address = form.address.data
+        current_user.Company = form.company.data
+        current_user.Specialization = form.specialization.data
+        current_user.PriceRate = form.price_rate.data
+
+        db.session.commit()
+        flash("Profile updated", category="success")
+        return redirect(url_for("auth.provider_profile"))
+
+    return render_template("providerprofile.html", user=current_user, form=form)

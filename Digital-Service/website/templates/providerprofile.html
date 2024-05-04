@@ -1,0 +1,92 @@
+{% extends "base.html" %} {% block title %}Profile{% endblock %} {% block content
+    %}
+<form method="POST">
+{{ form.csrf_token }}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Provider Profile</title>
+    <style>
+    </style>
+</head>
+<body>
+    <h1>Profile</h1>
+        <div>
+            {{ form.industry.label(class="form-control-label") }}
+
+                    {% if form.industry.errors %}
+                        {{ form.industry(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.industry.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.industry(value=current_user.Industry, class="form-control form-control-lg") }}
+                    {% endif %}
+        </div>
+        <div>
+            {{ form.address.label(class="form-control-label") }}
+
+                    {% if form.address.errors %}
+                        {{ form.address(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.address.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.address(value=current_user.Address,class="form-control form-control-lg") }}
+                    {% endif %}
+        </div>
+        <div>
+            {{ form.company.label(class="form-control-label") }}
+
+                    {% if form.company.errors %}
+                        {{ form.company(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.company.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.company(value=current_user.Company,class="form-control form-control-lg") }}
+                    {% endif %}
+        </div>
+        <div>
+            {{ form.specialization.label(class="form-control-label") }}
+
+                    {% if form.specialization.errors %}
+                        {{ form.specialization(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.specialization.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.specialization(value=current_user.Specialization, class="form-control form-control-lg") }}
+                    {% endif %}
+        </div>
+        <div>
+            {{ form.price_rate.label(class="form-control-label") }}
+
+                    {% if form.price_rate.errors %}
+                        {{ form.price_rate(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.price_rate.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.price_rate(value=current_user.PriceRate, class="form-control form-control-lg") }}
+                    {% endif %}
+        </div>
+        <br />
+        {{ form.submit(class="btn btn-primary") }}
+    </form>
+</body>
+</html>
+
+{% endblock %}

@@ -4,7 +4,7 @@ from wtforms import (
     StringField,
     PasswordField,
     SubmitField,
-    BooleanField,
+    DecimalField,
     TextAreaField,
     SelectField,
 )
@@ -107,6 +107,15 @@ class AccountForm(FlaskForm):
             raise ValidationError(
                 "Old password is incorrect. Please enter your current password"
             )
+
+
+class ProviderForm(FlaskForm):
+    industry = StringField("Industry:", validators=[Length(max=64)])
+    address = StringField("Address:", validators=[Length(max=255)])
+    company = StringField("Company:", validators=[Length(max=64)])
+    specialization = StringField("Specialization:", validators=[Length(max=64)])
+    price_rate = DecimalField("Price Rate:")
+    submit = SubmitField("Update Profile")
 
 
 class BookingForm(FlaskForm):
