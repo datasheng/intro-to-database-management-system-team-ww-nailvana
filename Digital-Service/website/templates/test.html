@@ -1,28 +1,23 @@
 {% extends "base.html" %} {% block title %}Test{% endblock %} {% block content
-    %}
+  %}
 
-    <!DOCTYPE html>
-    <html>
-    <body>
+  <!DOCTYPE html>
+  <html>
+  <body>
+  
+  <h1>Select appointment time</h1>
+  
+  <form name="passdata" method = "post">
+    <label for="start_time">Start time:</label>
+    <input type="datetime-local" name="start_time">
     
-    <h1>Select appointment time</h1>
+    <label for="end_time">End Time:</label>
+    <input type="datetime-local" name="end_time">
     
-    <form name="passdata" method = "post">
-      <label for="start_time">Start time:</label>
-      <input type="datetime-local" name="start_time">
-      
-      <label for="end_time">End Time:</label>
-      <input type="datetime-local" name="end_time">
-      
-      <input type="submit" value="Submit">
-    </form>
-    
-    </body>
-    <body>
-      <h1>{{start_time}}</h1>
-      <h1>{{end_time}}</h1>
-      <h1>{{args}}</h1>
-    </body>
-    </html>
-    
+    <input type="submit" value="Submit">
+  </form>
+  
+  </body>
+  </html>
+  
 {% endblock %}

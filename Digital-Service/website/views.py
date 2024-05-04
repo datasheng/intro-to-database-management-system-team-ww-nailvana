@@ -36,31 +36,66 @@ def providers():
     return render_template("providers.html", user=current_user, providers=providers)
 
 
-@views.route("/provider/<int:provider_id>", methods=["POST", "GET"])
+@views.route("/provider/<int:provider_id>")
 def provider(provider_id):
-    form = BookingForm()
     provider = Provider.query.get_or_404(provider_id)
     schedule = ProviderSchedule.query.filter_by(ProviderID=provider_id).all()
-
-    # add check; only customers should make appointments, only providers edit the schedule
-    if form.validate_on_submit():
-        date = datetime.now(datetime.UTC).date()  # current date
-        appointment_date = form.get_datetime(date)  # TODO: check if this is redundant
-
-        appointment = NailAppointment(
-            CustomerID=current_user.CustomerID,
-            ProviderID=provider_id,
-            Status="Scheduled",  # possible status codes: scheduled, fulfilled, cancelled(?)
-            StartTime=appointment_date,
-            EndTime=appointment_date + timedelta(hours=2),  # each appmt is 2 hours long
-        )
-        db.session.add(appointment)
-        db.session.commit()
-
-        flash("Appointment booked!", "success")
     return render_template(
         "provider.html", user=current_user, provider=provider, schedule=schedule
     )
+
+
+@views.route("/provider/<int:provider_id>", methods=["POST", "GET"])
+def getappointment(provider_id):
+    provider = Provider.query.get_or_404(provider_id)
+    schedule = ProviderSchedule.query.filter_by(ProviderID=provider_id).all()
+    form = BookingForm()
+    args = []
+    start_time = request.form["start_time"]
+    end_time = request.form["end_time"]
+    args.append((start_time))
+    args.append((end_time))
+    args.append((provider_id))
+    results = check_provider(args)
+
+    if not results[0]:
+        return render_template(
+            "provider.html",
+            user=current_user,
+            provider=provider,
+            schedule=schedule,
+            status="No appointment available",
+        )
+    else:
+        return render_template(
+            "pass.html",
+            user=current_user,
+            start_time=start_time,
+            end_time=end_time,
+            results=results,
+        )
+
+    # if
+
+    # add check; only customers should make appointments, only providers edit the schedule
+    # if form.validate_on_submit():
+    #     date = datetime.now(datetime.UTC).date()  # current date
+    #     appointment_date = form.get_datetime(date)  # TODO: check if this is redundant
+
+    #     appointment = NailAppointment(
+    #         CustomerID=current_user.CustomerID,
+    #         ProviderID=provider_id,
+    #         Status="Scheduled",  # possible status codes: scheduled, fulfilled, cancelled(?)
+    #         StartTime=appointment_date,
+    #         EndTime=appointment_date + timedelta(hours=2),  # each appmt is 2 hours long
+    #     )
+    #     db.session.add(appointment)
+    #     db.session.commit()
+
+    #     flash("Appointment booked!", "success")
+    # return render_template(
+    #     "pass.html", user=current_user, start_time=start_time, end_time=end_time, results = results
+    # )
 
 
 @views.route("/appointmentbooked", methods=["POST", "GET"])
@@ -90,19 +125,22 @@ def providerdata():
 @views.route("/customer-data")
 def customerdata():
     customerNames = sql_customer()
-    #return customerNames
-    return render_template("sql-customer-data.html", user=current_user, customerNames=customerNames)
+    # return customerNames
+    return render_template(
+        "sql-customer-data.html", user=current_user, customerNames=customerNames
+    )
 
-@views.route('/test')
-def test():
-     return render_template("test.html", user=current_user)
 
-@views.route('/test', methods = ["POST"])
-def getvalue():
-    start_time = request.form['start_time']
-    end_time = request.form['end_time']
-    args = []
-    args.append((start_time))
-    args.append((end_time))
-    results = check_availability(args)
-    return render_template("pass.html", user=current_user, start_time=start_time, end_time=end_time, results = results)
+# @views.route('/test')
+# def test():
+#      return render_template("test.html", user=current_user)
+
+# @views.route('/test', methods = ["POST"])
+# def getvalue():
+#     start_time = request.form['start_time']
+#     end_time = request.form['end_time']
+#     args = []
+#     args.append((start_time))
+#     args.append((end_time))
+#     results = check_availability(args)
+#     return render_template("pass.html", user=current_user, start_time=start_time, end_time=end_time, results = results)

@@ -15,7 +15,7 @@
             }
     
             form {
-                max-width: 1000px;
+                max-width: 20000px;
                 margin: 0 auto;
                 background: #ffffff;
                 padding: 20px;
@@ -83,7 +83,7 @@
     </head>
     
     <body>
-        <h2>Schedule</h2>
+        <h2>{{provider.Name}}'s Schedule</h2>
         <table>
             <thead>
                 <tr>
@@ -125,47 +125,29 @@
         </style>
     
     {% if user.is_authenticated %}
-        <form action="/appointmentbooked" method="post" onsubmit="return confirmSubmit()">
-            <h2>Booking Form</h2>
-            <label for="name">Full Name:</label>
-            <input type="text" id="name" name="name" required>
+
         
-            <label for="description">Description:</label>
-            <textarea id="description" name="description" rows="4" required></textarea>
+            <body>
+    
+                <h1>Select appointment time</h1>
+                
+                <form name="passdata" method = "post">
+                  <label for="start_time">Start time:</label>
+                  <input type="datetime-local" name="start_time" required>
+                  
+                  <label for="end_time">End Time:</label>
+                  <input type="datetime-local" name="end_time" required>
+
+                  <input type="submit" value="Submit">
+                </form>
+                </body>
+
+                <h1>{{status}}</h1>
         
-            <label for="appointment">Select Appointment Type:</label>
-            <select id="appointment" name="appointment" required>
-                <option value="">Select</option>
-                <option value="Consultation">Consultation</option>
-                <option value="Manicure">Manicure</option>
-                <option value="Treatment">Treatment</option>
-                <option value="Other">Other</option>
-            </select>
         
-            <label for="time">Select Appointment Time:</label>
-            <select id="time" name="time" required>
-                <option value="">Select</option>
-                <option value="09:00 AM">09:00 AM</option>
-                <option value="10:00 AM">10:00 AM</option>
-                <option value="11:00 AM">11:00 AM</option>
-                <option value="12:00 PM">12:00 PM</option>
-                <option value="01:00 PM">01:00 PM</option>
-                <option value="02:00 PM">02:00 PM</option>
-                <option value="03:00 PM">03:00 PM</option>
-                <option value="04:00 PM">04:00 PM</option>
-            </select>
-        
-            <input type="submit" value="Book Appointment">
         </form>
     {% endif %}
         
-        <script>
-            function confirmSubmit() {
-                return confirm("Are you sure you want to book this appointment?");
-            }
-        </script>
-        
-    
     </body>
     
     </html>
