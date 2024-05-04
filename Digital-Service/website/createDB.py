@@ -75,6 +75,7 @@ def check_availability(args):
     )
     results = []
     # formatted_results = []
+    # formatted_results = []
     mycursor = mydb.cursor()
     mycursor.callproc("check_availability", args)
     for result in mycursor.stored_results():

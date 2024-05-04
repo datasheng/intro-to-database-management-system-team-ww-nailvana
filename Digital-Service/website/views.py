@@ -45,6 +45,15 @@ def provider(provider_id):
     )
 
 
+@views.route("/provider/<int:provider_id>")
+def provider(provider_id):
+    provider = Provider.query.get_or_404(provider_id)
+    schedule = ProviderSchedule.query.filter_by(ProviderID=provider_id).all()
+    return render_template(
+        "provider.html", user=current_user, provider=provider, schedule=schedule
+    )
+
+
 @views.route("/provider/<int:provider_id>", methods=["POST", "GET"])
 def getappointment(provider_id):
     provider = Provider.query.get_or_404(provider_id)
@@ -135,6 +144,15 @@ def customerdata():
 # def test():
 #      return render_template("test.html", user=current_user)
 
+# @views.route('/test', methods = ["POST"])
+# def getvalue():
+#     start_time = request.form['start_time']
+#     end_time = request.form['end_time']
+#     args = []
+#     args.append((start_time))
+#     args.append((end_time))
+#     results = check_availability(args)
+#     return render_template("pass.html", user=current_user, start_time=start_time, end_time=end_time, results = results)
 # @views.route('/test', methods = ["POST"])
 # def getvalue():
 #     start_time = request.form['start_time']
