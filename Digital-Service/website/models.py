@@ -37,7 +37,7 @@ class Provider(db.Model, UserMixin):
     Industry = db.Column(db.VARCHAR(64))  # pet || nail
     Address = db.Column(db.VARCHAR(255))
     Email = db.Column(db.VARCHAR(64))
-    Number = db.Column(db.BIGINT)
+    Number = db.Column(db.VARCHAR(12))  # might be better as a string/varchar
     Rating = db.Column(db.Integer)
     PriceRate = db.Column(db.Integer)
     Specialization = db.Column(db.VARCHAR(64))
@@ -65,10 +65,9 @@ class ProviderSchedule(db.Model):
 
     ScheduleID = db.Column(db.Integer, primary_key=True)
     ProviderID = db.Column(db.Integer, db.ForeignKey("Provider.ProviderID"))
-    StartTime = db.Column(db.DATETIME)
-    EndTime = db.Column(db.DATETIME)
-    Day = db.Column(db.VARCHAR(10))
-    Availability = db.Column(db.Integer)
+    StartTime = db.Column(db.TIME)
+    EndTime = db.Column(db.TIME)
+    Day = db.Column(db.DATE)
 
     def to_json(self):
         return {
@@ -88,7 +87,7 @@ class Customer(db.Model, UserMixin):
     Name = db.Column(db.VARCHAR(32))
     Address = db.Column(db.VARCHAR(255))
     Email = db.Column(db.VARCHAR(64))
-    Number = db.Column(db.BIGINT)
+    Number = db.Column(db.VARCHAR(12))
 
     NailAppointments = db.relationship("NailAppointment", backref="Customer", lazy=True)
     Pets = db.relationship("Pet", backref="customer", lazy=True)

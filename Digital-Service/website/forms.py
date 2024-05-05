@@ -4,6 +4,7 @@ from wtforms import (
     StringField,
     PasswordField,
     SubmitField,
+    IntegerField,
     DecimalField,
     TextAreaField,
     SelectField,
@@ -74,11 +75,12 @@ class AccountForm(FlaskForm):
         "Username", validators=[DataRequired(), Length(min=4, max=20)]
     )
     password = PasswordField("Enter Old Password", validators=[DataRequired()])
-    new_password = PasswordField("Enter New Password", validators=[DataRequired()])
+    new_password = PasswordField("Enter New Password")
     confirm_password = PasswordField(
-        "Confirm Password", validators=[DataRequired(), EqualTo("new_password")]
+        "Confirm Password", validators=[EqualTo("new_password")]
     )
     email = StringField("Email", validators=[DataRequired(), Email()])
+    number = IntegerField("Phone Number - Digits Only")
 
     submit = SubmitField("Update")
 

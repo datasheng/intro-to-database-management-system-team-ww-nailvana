@@ -84,6 +84,20 @@
                         {{ form.email(value=current_user.Email, class="form-control form-control-lg") }}
                     {% endif %}
         </div>
+        <div>
+            {{ form.number.label(class="form-control-label") }}
+
+                    {% if form.number.errors %}
+                        {{ form.number(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.number.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.number(value=current_user.Number, class="form-control form-control-lg") }}
+                    {% endif %}
+        </div>
         <br />
         {{ form.submit(class="btn btn-primary") }}
     </form>

@@ -21,7 +21,6 @@ def login():
 
     form = LoginForm()
 
-    # HEEEEEEEEEEEEEEELP - Any optimizers?
     if form.validate_on_submit():
         provider = Provider.query.filter_by(Email=form.email.data).first()
         customer = Customer.query.filter_by(Email=form.email.data).first()
@@ -101,11 +100,13 @@ def current_user_logged_in():
 @login_required
 def account():
     form = AccountForm()
+    type = current_user_logged_in()
     print(current_user.Password)
 
     if form.validate_on_submit():
         current_user.Username = form.username.data
         current_user.Email = form.email.data
+        current_user.Number = form.number.data
         current_user.Password = generate_password_hash(
             form.new_password.data, method="pbkdf2:sha256"
         )
@@ -114,7 +115,7 @@ def account():
         flash("Account updated", category="success")
         return redirect(url_for("auth.account"))
 
-    return render_template("account.html", user=current_user, form=form)
+    return render_template("account.html", user=current_user, form=form, type=type)
 
 
 @auth.route("/provider_profile", methods=["GET", "POST"])
