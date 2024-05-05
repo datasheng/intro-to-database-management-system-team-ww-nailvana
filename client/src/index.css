@@ -1,0 +1,149 @@
+/* base styles */
+* {
+  margin: 0;
+  font-family: "Quicksand";
+  color: #333;
+}
+.navbar {
+  padding: 20px;
+  display:flex;
+  align-items: center;
+  max-width: 10000px;
+  margin:0;
+  border-bottom: 1px solid #f2f2f2;
+  background-color:#ccccff ;
+}
+.navbar h1 {
+  color: #6666cc;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+.navbar .links {
+  margin-left: auto;
+}
+.navbar a {
+  margin-left: 16px;
+  text-decoration: none;
+  padding: 6px;
+}
+.navbar a:hover {
+  color: #fafafa;
+  background-color: #9999cc;
+  border-radius: 8px;
+}
+.content {
+  max-width: 600px;
+  min-height: 100vh;
+  margin: 40px auto;
+  padding: 20px;
+}
+
+/* blog previews / list */
+.appointment-preview {
+  padding: 10px 16px;
+  margin: 20px 0;
+  border-bottom: 1px solid #fafafa;
+}
+
+.appointment-preview:hover {
+  color: #fafafa;
+  background-color: #9999cc;
+  border-radius: 8px;
+  text-decoration-color: #fafafa;
+}
+
+.appointment-preview h2 {
+  font-size: 20px;
+  color: #663399;
+  margin-bottom: 8px;
+}
+
+.appointment-preview a{
+  text-decoration: none;
+}
+
+.App {
+  background-color: #e6e6fc;
+}
+
+
+/* signup sign up form */
+.signup {
+  max-width: 400px;
+  margin: 0 auto;
+  text-align: center;
+}
+.signup label {
+  text-align: left;
+  display: block;
+}
+.signup h2 {
+  font-size: 20px;
+  color: #663399;
+  margin-bottom: 30px;
+}
+.signup input, .signup textarea, .signup select {
+  width: 100%;
+  padding: 6px 10px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  box-sizing: border-box;
+  display: block;
+}
+.signup button {
+  background: #6666cc;
+  color: #fff;
+  border: 0;
+  padding: 8px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* Schedule new appointment form */
+.schedule {
+  max-width: 400px;
+  margin: 0 auto;
+  text-align: center;
+}
+.schedule label {
+  text-align: left;
+  display: block;
+}
+.schedule h2 {
+  font-size: 20px;
+  color: #663399;
+  margin-bottom: 30px;
+}
+.schedule input, .schedule textarea, .schedule select {
+  width: 100%;
+  padding: 6px 10px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  box-sizing: border-box;
+  display: block;
+}
+.schedule button {
+  background: #6666cc;
+  color: #fff;
+  border: 0;
+  padding: 8px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* blog details page */
+.appointment-details h2 {
+  font-size: 30px;
+  color: #663399;
+  margin-bottom: 10px;
+}
+.appointment-details div {
+  margin: 20px 0;
+}
+.appointment-details button {
+  background: #6666cc;
+  color: #fff;
+  border: 0;
+  padding: 8px;
+  border-radius: 8px;
+  cursor: pointer;
+}
