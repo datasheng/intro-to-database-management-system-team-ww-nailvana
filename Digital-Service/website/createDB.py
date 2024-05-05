@@ -3,7 +3,8 @@ import pandas as pd
 import mysql.connector
 import pymysql
 import datetime
-
+from flask_sqlalchemy  import SQLAlchemy
+import sqlalchemy
 
 mydb = mysql.connector.connect(
     host="localhost",
