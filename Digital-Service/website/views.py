@@ -34,9 +34,14 @@ def home():
     return render_template("home.html", user=current_user, type=type)
 
 
-@views.route("/providers")
-def providers():
-    providers = Provider.query.all()
+@views.route("/nailtechnicians")
+def nailtechnicians():
+    providers = Provider.query.filter_by(Industry="Nail Technician").all()
+    return render_template("providers.html", user=current_user, providers=providers)
+
+@views.route("/petsitters")
+def petsitters():
+    providers = Provider.query.filter_by(Industry="Sitter").all()
     return render_template("providers.html", user=current_user, providers=providers)
 
 
