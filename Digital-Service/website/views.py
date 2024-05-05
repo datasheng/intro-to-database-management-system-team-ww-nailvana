@@ -135,6 +135,11 @@ def customerdata():
     )
 
 
+@views.route("/nailvana")
+def nailvana():
+    providers = Provider.query.all()
+    return render_template("nailvana.html", user=current_user, providers=providers)
+
 
 def get_dropdown_values(provider_id):
 
