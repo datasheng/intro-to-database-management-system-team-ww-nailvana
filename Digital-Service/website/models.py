@@ -44,7 +44,8 @@ class ProviderSchedule(db.Model):
     ProviderID = db.Column(db.Integer, db.ForeignKey("Provider.ProviderID"))
     StartTime = db.Column(db.TIME)
     EndTime = db.Column(db.TIME)
-    Day = db.Column(db.DATE)
+    AppointmentDate = db.Column(db.DATE)
+    Availability = db.Column(db.Integer)
 
     def to_json(self):
         return {

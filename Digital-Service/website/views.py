@@ -116,27 +116,32 @@ def get_dropdown_values(provider_id):
 
     schedules = ProviderSchedule.query.filter_by(ProviderID=provider_id).all()
     myDict = {}
-    for p in schedules:
 
-        day = p.Day
+    if schedules: 
+        for p in schedules:
+        
+            date = p.AppointmentDate
+            # Select all schedule entries that belong to a provider
+            q = ProviderSchedule.query.filter_by(ProviderID=provider_id, Availability = None, AppointmentDate = date).all()
+            # build the structure (lst_c) that includes the time slots that belong to a specific date 
+            lst_c = []
+            if q: 
+                for c in q:
+                    start_time = str(c.StartTime)
+                    # lst_c.append( datetime.datetime.strptime(start_time, "%H:%M").strftime("%I:%M %p") )
+                    lst_c.append( datetime.datetime.strptime(start_time, "%H:%M:%S").strftime("%I:%M %p") )
+                    #lst_c.append( start_time )
+                # myDict[str(date)] = lst_c
+                myDict[str(datetime.datetime.strptime(str(date), "%Y-%m-%d").strftime("%A, %B %d"))] = lst_c
+            else:
+                lst_c.append("No available times")
+                myDict[str(date)] = lst_c
 
-        # Select all schedule entries that belong to a provider
-        q = ProviderSchedule.query.filter_by(
-            ProviderID=provider_id, Day=day, Availability=None
-        ).all()
-
-        # build the structure (lst_c) that includes the time slots that belong to a specific date
+    else: 
         lst_c = []
-        if q:
-            for c in q:
-                start_time = str(c.StartTime.time())[0:5]
-                lst_c.append(
-                    datetime.datetime.strptime(start_time, "%H:%M").strftime("%I:%M %p")
-                )
-            myDict[day] = lst_c
-        else:
-            lst_c.append("No available times")
-            myDict[day] = lst_c
+        lst_c.append("No available times")
+        myDict["No available days"] = lst_c
+    
 
     class_entry_relations = myDict
 
@@ -196,10 +201,10 @@ def process_data():
     selected_time = request.args.get("selected_entry", type=str)
     provider_id = request.args.get("provider_id", type=int)
 
-    appointment = ProviderSchedule.query.filter_by(
-        ProviderID=provider_id,
-        Day=selected_date,
-    ).first()
+    
+
+
+    appointment = ProviderSchedule.query.filter_by(ProviderID=provider_id, AppointmentDate = selected_date, StartTime = selected_time).first()
     appointment.Availability = 1
     db.session.commit()
 
