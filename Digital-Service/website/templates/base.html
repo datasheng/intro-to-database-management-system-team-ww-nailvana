@@ -31,9 +31,9 @@
               <div class="navbar-nav">
                 {% if user.is_authenticated %}
                   <a class="nav-item nav-link" id="home" href="/">Home</a>
-                  <a class="nav-item nav-link" id="logout" href="/logout">Logout</a>
-                  <a class="nav-item nav-link" id="providers" href="/providers">Providers</a>
                   <a class="nav-item nav-link" id="account" href="/account">Account</a>
+                  <a class="nav-item nav-link" id="logout" href="/logout">Logout</a>
+
                   {% if type == "provider" %}
                     <a class="nav-item nav-link" id="provider_profile" href="{{url_for('auth.provider_profile')}}">Provider Profile</a>
                   {% endif %}

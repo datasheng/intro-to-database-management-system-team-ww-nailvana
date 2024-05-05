@@ -1,21 +1,26 @@
-{% extends "base.html" %} {% block title %}Home{% endblock %} {% block content
-%}
-<h1 align="center">Notes</h1>
-<ul class="list-group list-group-flush" id="notes">
-  {% for note in user.notes %}
-  <li class="list-group-item">
-    {{ note.data }}
-    <button type="button" class="close" onClick="deleteNote({{ note.id }})">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </li>
-  {% endfor %}
-</ul>
-<form method="POST">
-  <textarea name="note" id="note" class="form-control"></textarea>
-  <br />
-  <div align="center">
-    <button type="submit" class="btn btn-primary">Add Note</button>
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="row mt-5">
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Cat Sitting Site</h5>
+        <p class="card-text">Welcome to our cat sitting service! Book appointments, manage your bookings, and explore our providers.</p>
+        <a href="#" class="btn btn-primary">Explore</a>
+      </div>
+    </div>
   </div>
-</form>
-{% endblock %}  
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Nail Tech Site</h5>
+        <p class="card-text">Welcome to our nail tech service! Book appointments, manage your bookings, and explore our providers. lol</p>
+        <a href="#" class="btn btn-primary">Explore</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
