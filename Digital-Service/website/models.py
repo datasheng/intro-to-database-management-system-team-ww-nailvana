@@ -68,6 +68,7 @@ class ProviderSchedule(db.Model):
     StartTime = db.Column(db.DATETIME)
     EndTime = db.Column(db.DATETIME)
     Day = db.Column(db.VARCHAR(10))
+    Availability = db.Column(db.Integer)
 
     def to_json(self):
         return {
