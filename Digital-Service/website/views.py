@@ -1,6 +1,9 @@
 from flask import Blueprint, render_template, request, flash, jsonify, Flask
 from flask_login import login_required, current_user
-from datetime import datetime, timedelta
+from flask_sqlalchemy  import SQLAlchemy
+import sqlalchemy
+from datetime import datetime, timedelta, date
+import calendar
 from .models import *
 from .auth import *
 from .forms import BookingForm
@@ -132,16 +135,93 @@ def customerdata():
     )
 
 
-# @views.route('/test')
-# def test():
-#      return render_template("test.html", user=current_user)
 
-# @views.route('/test', methods = ["POST"])
-# def getvalue():
-#     start_time = request.form['start_time']
-#     end_time = request.form['end_time']
-#     args = []
-#     args.append((start_time))
-#     args.append((end_time))
-#     results = check_availability(args)
-#     return render_template("pass.html", user=current_user, start_time=start_time, end_time=end_time, results = results)
+def get_dropdown_values(provider_id):
+
+    """
+    dummy function, replace with e.g. database call. If data not change, this function is not needed but dictionary
+could be defined globally
+    """
+
+    # Create a dictionary (myDict) where the key is 
+    # the name of the brand, and the list includes the names of the car models
+    # 
+    # Read from the database the list of cars and the list of models. 
+    # With this information, build a dictionary that includes the list of models by brand. 
+    # This dictionary is used to feed the drop down boxes of car brands and car models that belong to a car brand.
+    # 
+    # Example:
+    #
+    # {'Toyota': ['Tercel', 'Prius'], 
+    #  'Honda': ['Accord', 'Brio']}
+
+    schedules = ProviderSchedule.query.filter_by(ProviderID=provider_id).all()
+    # Create an empty dictionary
+    myDict = {}
+    for p in schedules:
+    
+        day = p.Day
+
+        # Select all schedule entries that belong to a provider
+        q = ProviderSchedule.query.filter_by(ProviderID=provider_id, Day = day).all()
+    
+        # build the structure (lst_c) that includes the names of the car models that belong to the car brand
+        lst_c = []
+        for c in q:
+            start_time = str(c.StartTime.time())[0:5]
+            lst_c.append( datetime.datetime.strptime(start_time, "%H:%M").strftime("%I:%M %p") )
+        myDict[day] = lst_c
+    
+
+    class_entry_relations = myDict
+                        
+    return class_entry_relations
+
+
+
+
+@views.route('/_update_dropdown')
+def update_dropdown():
+
+    # the value of the first dropdown (selected by the user)
+    selected_class = request.args.get('selected_class', type=str)
+
+    # get values for the second dropdown
+    updated_values = get_dropdown_values(1)[selected_class]
+
+    # create the value sin the dropdown as a html string
+    html_string_selected = ''
+    for entry in updated_values:
+        html_string_selected += '<option value="{}">{}</option>'.format(entry, entry)
+
+    return jsonify(html_string_selected=html_string_selected)
+
+
+@views.route('/_process_data')
+def process_data():
+    selected_class = request.args.get('selected_class', type=str)
+    selected_entry = request.args.get('selected_entry', type=str)
+
+    # process the two selected values here and return the response; here we just create a dummy string
+
+    return jsonify(random_text="You selected the appointment: {} and the time: {}.".format(selected_class, selected_entry))
+
+
+
+
+@views.route('/test')
+def index():
+
+    """
+    initialize drop down menus
+    """
+
+    class_entry_relations = get_dropdown_values(1)
+
+    default_classes = sorted(class_entry_relations.keys())
+    default_values = class_entry_relations[default_classes[0]]
+
+    return render_template('test.html',
+                       all_classes=default_classes,
+                       all_entries=default_values, user = current_user)
+
