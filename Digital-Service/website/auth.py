@@ -121,6 +121,7 @@ def account():
 @auth.route("/provider_profile", methods=["GET", "POST"])
 @login_required
 def provider_profile():
+    type = current_user_logged_in()
     form = ProviderForm()
 
     # number, address --> account route?
@@ -135,4 +136,6 @@ def provider_profile():
         flash("Profile updated", category="success")
         return redirect(url_for("auth.provider_profile"))
 
-    return render_template("providerprofile.html", user=current_user, form=form)
+    return render_template(
+        "providerprofile.html", user=current_user, form=form, type=type
+    )

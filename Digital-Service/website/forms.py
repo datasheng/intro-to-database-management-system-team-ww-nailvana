@@ -5,7 +5,6 @@ from wtforms import (
     PasswordField,
     SubmitField,
     IntegerField,
-    DecimalField,
     TextAreaField,
     SelectField,
 )
@@ -14,7 +13,6 @@ from wtforms.validators import (
     Length,
     Email,
     EqualTo,
-    Optional,
     ValidationError,
 )
 from .models import Provider, Customer
@@ -80,7 +78,7 @@ class AccountForm(FlaskForm):
         "Confirm Password", validators=[EqualTo("new_password")]
     )
     email = StringField("Email", validators=[DataRequired(), Email()])
-    number = IntegerField("Phone Number - Digits Only")
+    number = StringField("Phone Number")
 
     submit = SubmitField("Update")
 
@@ -116,7 +114,7 @@ class ProviderForm(FlaskForm):
     address = StringField("Address:", validators=[Length(max=255)])
     company = StringField("Company:", validators=[Length(max=64)])
     specialization = StringField("Specialization:", validators=[Length(max=64)])
-    price_rate = DecimalField("Price Rate:")
+    price_rate = IntegerField("Price Rate:")
     submit = SubmitField("Update Profile")
 
 

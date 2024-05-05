@@ -24,7 +24,7 @@ def create_app():
     app.register_blueprint(views, url_prefix="/")
     app.register_blueprint(auth, url_prefix="/")
 
-    from .models import Provider, Customer, User, Note
+    from .models import Provider, Customer
 
     with app.app_context():
         db.create_all()

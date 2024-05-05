@@ -97,19 +97,6 @@ def appointmentbooked():
     return render_template("appointmentbooked.html", user=current_user)
 
 
-@views.route("/delete-note", methods=["POST"])
-def delete_note():
-    note = json.loads(request.data)
-    noteId = note["noteId"]
-    note = Note.query.get(noteId)
-    if note:
-        if note.user_id == current_user.id:
-            db.session.delete(note)
-            db.session.commit()
-
-    return jsonify({})
-
-
 @views.route("/provider-data")
 def providerdata():
     sql_provider()
