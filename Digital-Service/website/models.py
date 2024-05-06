@@ -63,7 +63,7 @@ class Customer(db.Model, UserMixin):
     Username = db.Column(db.VARCHAR(100))
     Password = db.Column(db.VARCHAR(150))
     Name = db.Column(db.VARCHAR(32))
-    Address = db.Column(db.VARCHAR(255))
+    Address = db.Column(db.VARCHAR(255))  # pet sitting
     Email = db.Column(db.VARCHAR(64))
     Number = db.Column(db.VARCHAR(12))
 

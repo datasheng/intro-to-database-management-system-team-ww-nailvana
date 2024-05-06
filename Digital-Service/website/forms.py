@@ -13,6 +13,7 @@ from wtforms.validators import (
     Length,
     Email,
     EqualTo,
+    Optional,
     ValidationError,
 )
 from .models import Provider, Customer
@@ -73,9 +74,9 @@ class AccountForm(FlaskForm):
         "Username", validators=[DataRequired(), Length(min=4, max=20)]
     )
     password = PasswordField("Enter Old Password", validators=[DataRequired()])
-    new_password = PasswordField("Enter New Password")
+    new_password = PasswordField("Enter New Password", validators=[Optional()])
     confirm_password = PasswordField(
-        "Confirm Password", validators=[EqualTo("new_password")]
+        "Confirm Password", validators=[EqualTo("new_password"), Optional()]
     )
     email = StringField("Email", validators=[DataRequired(), Email()])
     number = StringField("Phone Number")

@@ -107,9 +107,10 @@ def account():
         current_user.Username = form.username.data
         current_user.Email = form.email.data
         current_user.Number = form.number.data
-        current_user.Password = generate_password_hash(
-            form.new_password.data, method="pbkdf2:sha256"
-        )
+        if form.new_password.data:
+            current_user.Password = generate_password_hash(
+                form.new_password.data, method="pbkdf2:sha256"
+            )
 
         db.session.commit()
         flash("Account updated", category="success")

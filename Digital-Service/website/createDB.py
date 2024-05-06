@@ -3,7 +3,7 @@ import pandas as pd
 import mysql.connector
 import pymysql
 import datetime
-from flask_sqlalchemy  import SQLAlchemy
+from flask_sqlalchemy import SQLAlchemy
 import sqlalchemy
 
 mydb = mysql.connector.connect(
@@ -120,5 +120,18 @@ def check_provider(args):
     return results
 
 
-# # args = ('2024-05-01 13:00:00', '2024-05-01 16:30:00')
-# # check_availability(args)
+def get_revenue(args):
+    mydb = mysql.connector.connect(
+        host="localhost",
+        user="root",
+        password="databases336",
+        port=3306,
+        database="catcare",
+    )
+    results = []
+    mycursor = mydb.cursor()
+    mycursor.callproc("total_revenue", args)
+    for result in mycursor.stored_results():
+        results.append(result.fetchall())
+    mydb.close()
+    return results
