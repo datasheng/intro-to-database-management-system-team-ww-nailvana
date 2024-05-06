@@ -34,10 +34,25 @@ def home():
     return render_template("home.html", user=current_user, type=type)
 
 
-@views.route("/nailtechnicians")
+@views.route("/nailvana")
 def nailtechnicians():
     providers = Provider.query.filter_by(Industry="Nail Technician").all()
-    return render_template("providers.html", user=current_user, providers=providers)
+    return render_template("nailvanaPages/nailvana.html", user=current_user, providers=providers)
+
+@views.route("/manicure")
+def manicure():
+    providers = Provider.query.filter_by(Specialization="Manicure").all()
+    return render_template("nailvanaPages/manicure.html", user=current_user, providers=providers)
+
+@views.route("/pedicure-and-spa")
+def pedicure():
+    providers = Provider.query.filter_by(Specialization="Pedicure & Spa").all()
+    return render_template("nailvanaPages/pediAndSpa.html", user=current_user, providers=providers)
+
+@views.route("/waxing")
+def waxing():
+    providers = Provider.query.filter_by(Specialization="Waxing").all()
+    return render_template("nailvanaPages/waxing.html", user=current_user, providers=providers)
 
 
 @views.route("/petsitters")
