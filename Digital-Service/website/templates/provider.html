@@ -9,7 +9,6 @@
         <style>
             /* Style for the form */
             body {
-                font-family: Arial, sans-serif;
                 background-color: #f4f4f4;
     
             }
@@ -79,39 +78,18 @@
             body {
                 padding-bottom: 100px;
             }
+            .wrapper {
+                text-align: center;
+            }
+            .button {
+                position: absolute;
+                top: 50%;
+            }   
+
         </style>
     </head>
     
     <body>
-        <h2>{{provider.Name}}'s Schedule</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Monday</th>
-                    <th>Tuesday</th>
-                    <th>Wednesday</th>
-                    <th>Thursday</th>
-                    <th>Friday</th>
-                    <th>Saturday</th>
-                    <th>Sunday</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    {% set days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'] %}
-                    {% for day in days %}
-                        <td>
-                            {% for entry in schedule if entry.Day == day %}
-                                {{ entry.StartTime }} - {{ entry.EndTime }}<br>
-                            {% endfor %}
-                        </td>
-                    {% endfor %}
-                </tr>
-            </tbody>
-        </table>
-    
-    
-        <!-- Appointment booking form -->
     
         <style>
             textarea#description {
@@ -130,35 +108,41 @@
     <body>
         <div class="container">
           <div class="header">
-            <h1 class="text-center text-muted">Select an Appointment</h1>
+            <h1 class="text-center text-success">Select an Appointment with {{provider.Name}}</h1>
           </div>
     
-          <br><br><br>
+          <br>
     
-          <div class="row">
+          <div class="row justify-content-center align-items-center">
             <div class="form-group col-xs-6">
-              <label for="all_classes">Select a Date</label>
-              <select class="form-control" style="color: white; background: #34568B;" id="all_classes">
+              <label for="all_classes">Select a date:</label>
+              <select class="form-control" style="color: rgb(0, 0, 0); background: #ffffff;" id="all_classes">
                 {% for o in all_classes %}
                         <option value="{{ o }}">{{ o }}</option>
                 {% endfor %}
               </select>
             </div>
             <div class="form-group col-xs-6">
-              <label for="all_entries">Select an appointment</label>
-              <select class="form-control" style="color:white; background:#009B77;" id="all_entries">
+              <label for="all_entries">Select an appointment time:</label>
+              <select class="form-control" style="color:rgb(0, 0, 0); background:#ffffff;" id="all_entries">
                 {% for o in all_entries %}
                         <option value="{{ o }}">{{ o }}</option>
                 {% endfor %}
               </select>
             </div>
           </div>
-    
-          <div>
-            <button type="button" style="color:white; background:#3498DB;" id="process_input">Process selection!</button>
-          </div><br><br>
-          <div id="processed_results">
-            Here we display some output based on the selection
+
+          <div id="appointmentDescription"> 
+            <label for="description">Enter a description:</label>
+            <input type="text" id="description" name="description" placeholder="Description...">
+          </div>
+
+          <div class="wrapper">
+            <button type="button" style="color:white; background:#25af3c;" id="process_input">Book Appointment!</button>
+          </div><br>
+          <div id="processed_results" class = "wrapper">
+            <!-- Here we display some output based on the selection -->
+            
           </div>
         </div>
         
@@ -197,8 +181,9 @@
         $.getJSON('/_process_data', {
             selected_class: $('#all_classes').val(),
             selected_entry: $('#all_entries').val(),
-            provider_id: {{provider_id}}
-
+            description: $('#description').val(),
+            provider_id: {{provider_id}},
+            
         }).success(function(data) {
             $('#processed_results').text(data.random_text);
         })

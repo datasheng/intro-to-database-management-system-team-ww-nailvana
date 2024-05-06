@@ -71,6 +71,13 @@
 
           <div class="container">
             {% block content %}
+
+              {% block form %}
+              {% endblock %}
+
+              {% block dropdown %}
+              {% endblock %}
+
             {% endblock %}
           </div>
 
@@ -91,10 +98,6 @@
           ></script>
 
           {% block javascript %}
-
-            {% block provider %}
-            {% endblock %}
-
           {% endblock %}
 
     <script 
