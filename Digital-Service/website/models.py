@@ -109,8 +109,10 @@ class PetAppointment(db.Model):
     ProviderID = db.Column(db.Integer, db.ForeignKey("Provider.ProviderID"))
     PetID = db.Column(db.Integer, db.ForeignKey("Pet.PetID"))
     Status = db.Column(db.VARCHAR(32))
-    BorrowDate = db.Column(db.DATETIME)
-    ReturnDate = db.Column(db.DATETIME)
+    BorrowDate = db.Column(db.TIME)
+    ReturnDate = db.Column(db.TIME)
+    AppDate = db.Column(db.DATE)
+    Price = db.Column(db.Integer)
 
     def to_json(self):
         return {
@@ -127,11 +129,13 @@ class NailAppointment(db.Model):
     AppointmentID = db.Column(db.Integer, primary_key=True)
     CustomerID = db.Column(db.Integer, db.ForeignKey("Customer.CustomerID"))
     ProviderID = db.Column(db.Integer, db.ForeignKey("Provider.ProviderID"))
-    Type = db.Column(db.VARCHAR(15))
-    Comment = db.Column(db.Text)
+    # Type = db.Column(db.VARCHAR(15))
+    # Comment = db.Column(db.Text)
     Status = db.Column(db.VARCHAR(32))
-    StartTime = db.Column(db.DATETIME)
-    EndTime = db.Column(db.DATETIME)
+    StartTime = db.Column(db.TIME)
+    EndTime = db.Column(db.TIME)
+    AppDate = db.Column(db.DATE)
+    Price = db.Column(db.Integer)
 
     def to_json(self):
         return {

@@ -116,7 +116,7 @@ class ProviderForm(FlaskForm):
     company = StringField("Company:", validators=[Length(max=64)])
     specialization = StringField("Specialization:", validators=[Length(max=64)])
     price_rate = IntegerField("Price Rate:")
-    submit = SubmitField("Update Profile")
+    submit = SubmitField("Update")
 
 
 class BookingForm(FlaskForm):

@@ -1,5 +1,7 @@
 {% extends "base.html" %} {% block title %}Profile{% endblock %} {% block content
     %}
+
+{% block form %}
 <form method="POST">
 {{ form.csrf_token }}
 <!DOCTYPE html>
@@ -12,7 +14,7 @@
     </style>
 </head>
 <body>
-    <h1>Provider profile</h1>
+    <h1>Provider settings</h1>
         <div>
             {{ form.industry.label(class="form-control-label") }}
 
@@ -83,10 +85,190 @@
                         {{ form.price_rate(value=current_user.PriceRate, class="form-control form-control-lg") }}
                     {% endif %}
         </div>
-        <br />
+        <br>
         {{ form.submit(class="btn btn-primary") }}
     </form>
 </body>
 </html>
+<br><br><br><br>
+
+{% endblock %}
+
+{% block dropdown %}
+<html lang="en">
+  
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Provider Schedule Form</title>
+      <style>
+          /* Style for the form */
+          body {
+              background-color: #ffffff;
+  
+          }
+  
+          form {
+              max-width: 2000px;
+
+          }
+  
+          label {
+              display: block;
+
+          }
+  
+          input[type="text"],
+          select {
+              width: 100%;
+              padding: 8px;
+              margin-bottom: 10px;
+              border: 1px solid #ccc;
+              border-radius: 4px;
+              box-sizing: border-box;
+          }
+  
+          input[type="submit"] {
+              background-color: #4988db;
+              color: white;
+              padding: 10px 20px;
+              border: none;
+              border-radius: 4px;
+              cursor: pointer;
+              float: right;
+          }
+  
+          input[type="submit"]:hover {
+              background-color: #45a049;
+          }
+  
+          /* Style for the schedule table */
+          table {
+              width: 100%;
+              border-collapse: collapse;
+              margin-bottom: 20px;
+          }
+  
+          th,
+          td {
+              border: 1px solid #ddd;
+              padding: 8px;
+              text-align: left;
+          }
+  
+          th {
+              background-color: #f2f2f2;
+          }
+  
+          body {
+              padding-bottom: 300px;
+          }
+          .wrapper {
+              text-align: center;
+          }
+          .button {
+              position: absolute;
+              top: 50%;
+          }   
+
+      </style>
+  </head>
+  
+  <body>
+      <style>
+          textarea#description {
+              resize: vertical;
+              /* Allow vertical resizing only */
+              min-height: 100px;
+              /* Set a minimum height */
+              width: 100%;
+              /* Set width to 100% */
+          }
+      </style>
+  
+  {% if user.is_authenticated %}
+
+      
+  <body>
+      <div class="container">
+        <div class="header">
+          <h1 class="text-center ">Add available days:</h1>
+        </div>
+  
+        <br>
+  
+        <div class="row justify-content-center align-items-center">
+          <div class="form-group col-xs-6">
+            <label for="all_classes">Select a date:</label>
+            <select class="form-control" style="color: rgb(0, 0, 0); background: #ffffff;" id="all_classes">
+              {% for o in all_classes %}
+                      <option value="{{ o }}">{{ o }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="form-group col-xs-6">
+            <label for="start_time">Start:</label>
+            <select class="form-control" style="color:rgb(0, 0, 0); background:#ffffff;" id="start_time">
+              {% for o in start_time %}
+                      <option value="{{ o }}">{{ o }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="form-group col-xs-6">
+            <label for="end_time">End:</label>
+            <select class="form-control" style="color:rgb(0, 0, 0); background:#ffffff;" id="end_time">
+              {% for o in end_time %}
+                      <option value="{{ o }}">{{ o }}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+
+        <div class="wrapper">
+          <button type="button" style="color:white; background:#25af3c;" id="process_input" class="btn btn-primary">Confirm Entry!</button>
+        </div><br>
+        <div id="processed_results" class = "wrapper">
+          <!-- Here we display some output based on the selection -->
+          
+        </div>
+      </div>
+      
+  </body>
+      
+      
+     
+  {% endif %}
+      
+  </body>
+  
+  </html>
+{% endblock %}
+
+{% endblock %}
+
+{% block javascript %}
+<script src="https://code.jquery.com/jquery-1.12.4.js" type="text/javascript"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+
+  $('#all_classes').change(function(){
+
+  });
+  $('#process_input').bind('click', function() {
+
+      $.getJSON('/_process_provider_schedule', {
+          selected_date: $('#all_classes').val(),
+          start_time: $('#start_time').val(),
+          end_time: $('#end_time').val(),
+          
+      }).done(function(data) {
+          $('#processed_results').text(data.random_text);
+      })
+    return false;
+
+  });
+});
+</script>
 
 {% endblock %}

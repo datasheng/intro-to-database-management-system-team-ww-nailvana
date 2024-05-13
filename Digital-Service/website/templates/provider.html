@@ -25,7 +25,8 @@
     
             h2 {
                 text-align: center;
-                margin-bottom: 20px;
+                margin-bottom: 10px;
+                font-size: 30px;
             }
     
             label {
@@ -104,11 +105,12 @@
     
     {% if user.is_authenticated %}
 
-        
+  <form>
     <body>
         <div class="container">
           <div class="header">
             <h1 class="text-center text-success">Select an Appointment with {{provider.Name}}</h1>
+            <h2 class="text-center">Price Rate: ${{provider.PriceRate}}</h2>
           </div>
     
           <br>
@@ -145,6 +147,7 @@
             
           </div>
         </div>
+      </form>
         
     </body>
         
@@ -185,7 +188,7 @@
             provider_id: {{provider_id}},
             
         }).success(function(data) {
-            $('#processed_results').text(data.random_text);
+            $('#processed_results').text(data.result_text);
         })
       return false;
 
