@@ -23,7 +23,6 @@ class Provider(db.Model, UserMixin):
     Schedules = db.relationship("ProviderSchedule", backref="Provider", lazy=True)
     PetAppointments = db.relationship("PetAppointment", backref="Provider", lazy=True)
     NailAppointments = db.relationship("NailAppointment", backref="Provider", lazy=True)
-    Reviews = db.relationship("Review", backref="provider", lazy=True)
 
     def get_id(self):
         return self.Email
@@ -147,19 +146,3 @@ class NailAppointment(db.Model):
         }
 
 
-class Review(db.Model):
-    __tablename__ = "Review"
-
-    ReviewID = db.Column(db.Integer, primary_key=True)
-    ProviderID = db.Column(db.Integer, db.ForeignKey("Provider.ProviderID"))
-    ServiceType = db.Column(db.VARCHAR(20))
-    Rating = db.Column(db.Integer)
-    Comment = db.Column(db.TEXT)
-
-    def to_json(self):
-        return {
-            "ReviewID": self.ReviewID,
-            "ProviderID": self.ProviderID,
-            "ServiceType": self.ServiceType,
-            "Rating": self.Rating,
-        }
