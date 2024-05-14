@@ -38,25 +38,39 @@ def home():
 def nailtechnicians():
     providers = Provider.query.filter_by(Industry="Nail Technician").all()
     type = current_user_logged_in()
-    return render_template("nailvanaPages/nailvana.html", user=current_user, providers=providers, type=type)
+    return render_template(
+        "nailvanaPages/nailvana.html", user=current_user, providers=providers, type=type
+    )
+
 
 @views.route("/manicure")
 def manicure():
     providers = Provider.query.filter_by(Specialization="Manicure").all()
     type = current_user_logged_in()
-    return render_template("nailvanaPages/manicure.html", user=current_user, providers=providers, type=type)
+    return render_template(
+        "nailvanaPages/manicure.html", user=current_user, providers=providers, type=type
+    )
+
 
 @views.route("/pedicure-and-spa")
 def pedicure():
     providers = Provider.query.filter_by(Specialization="Pedicure & Spa").all()
     type = current_user_logged_in()
-    return render_template("nailvanaPages/pediAndSpa.html", user=current_user, providers=providers, type=type)
+    return render_template(
+        "nailvanaPages/pediAndSpa.html",
+        user=current_user,
+        providers=providers,
+        type=type,
+    )
+
 
 @views.route("/waxing")
 def waxing():
     providers = Provider.query.filter_by(Specialization="Waxing").all()
     type = current_user_logged_in()
-    return render_template("nailvanaPages/waxing.html", user=current_user, providers=providers, type=type)
+    return render_template(
+        "nailvanaPages/waxing.html", user=current_user, providers=providers, type=type
+    )
 
 
 @views.route("/petsitters")
@@ -136,7 +150,11 @@ def customerdata():
 
 def get_dropdown_values(provider_id):
 
-    schedules = ProviderSchedule.query.filter_by(ProviderID=provider_id).order_by(ProviderSchedule.AppointmentDate).all()
+    schedules = (
+        ProviderSchedule.query.filter_by(ProviderID=provider_id)
+        .order_by(ProviderSchedule.AppointmentDate)
+        .all()
+    )
     myDict = {}
 
     if schedules:
@@ -144,9 +162,13 @@ def get_dropdown_values(provider_id):
 
             date = p.AppointmentDate
             # Select all schedule entries that belong to a provider
-            q = ProviderSchedule.query.filter_by(
-                ProviderID=provider_id, Availability=None, AppointmentDate=date
-            ).order_by(ProviderSchedule.AppointmentDate).all()
+            q = (
+                ProviderSchedule.query.filter_by(
+                    ProviderID=provider_id, Availability=None, AppointmentDate=date
+                )
+                .order_by(ProviderSchedule.AppointmentDate)
+                .all()
+            )
             # build the structure (lst_c) that includes the time slots that belong to a specific date
             lst_c = []
             if q:
@@ -160,7 +182,13 @@ def get_dropdown_values(provider_id):
                     )
                     # lst_c.append( start_time )
                 # myDict[str(date)] = lst_c
-                myDict[str(datetime.datetime.strptime(str(date), "%Y-%m-%d").strftime("%A, %B %d %Y"))] = lst_c
+                myDict[
+                    str(
+                        datetime.datetime.strptime(str(date), "%Y-%m-%d").strftime(
+                            "%A, %B %d %Y"
+                        )
+                    )
+                ] = lst_c
             else:
                 lst_c.append("No available times")
                 myDict[str(date)] = lst_c
@@ -228,53 +256,65 @@ def process_data():
     selected_time = request.args.get("selected_entry", type=str)
     provider_id = request.args.get("provider_id", type=int)
     description = request.args.get("description", type=str)
-    customer_id = current_user.CustomerID   
+    customer_id = current_user.CustomerID
 
-    sql_formatted_date = datetime.datetime.strptime(selected_date, "%A, %B %d %Y").strftime("%Y-%m-%d")
-    sql_formatted_time = datetime.datetime.strptime(selected_time, "%I:%M %p").strftime("%H:%M:%S")
+    sql_formatted_date = datetime.datetime.strptime(
+        selected_date, "%A, %B %d %Y"
+    ).strftime("%Y-%m-%d")
+    sql_formatted_time = datetime.datetime.strptime(selected_time, "%I:%M %p").strftime(
+        "%H:%M:%S"
+    )
 
-    start = int(datetime.datetime.strptime(str(sql_formatted_time), "%H:%M:%S").strftime("%H"))
-    end = datetime.datetime.strptime(str(start+1), "%H").strftime("%H:%M:%S")
+    start = int(
+        datetime.datetime.strptime(str(sql_formatted_time), "%H:%M:%S").strftime("%H")
+    )
+    end = datetime.datetime.strptime(str(start + 1), "%H").strftime("%H:%M:%S")
 
-    provider = Provider.query.filter_by(ProviderID = provider_id).first()
+    provider = Provider.query.filter_by(ProviderID=provider_id).first()
     provider_name = provider.Name
     provider_industry = provider.Industry
     provider_price = provider.PriceRate
-    
-    appointment = ProviderSchedule.query.filter_by(ProviderID=provider_id, AppointmentDate = sql_formatted_date, StartTime = sql_formatted_time).first()
+
+    appointment = ProviderSchedule.query.filter_by(
+        ProviderID=provider_id,
+        AppointmentDate=sql_formatted_date,
+        StartTime=sql_formatted_time,
+    ).first()
     appointment.Availability = 1
     db.session.commit()
 
-
-    if provider_industry == 'Nail Technician':
+    if provider_industry == "Nail Technician":
         new_appointment = NailAppointment(
-                ProviderID = provider_id,
-                CustomerID = customer_id,
-                # Type = ,
-                # Comment = ,
-                StartTime = sql_formatted_time,  
-                EndTime = end,
-                AppDate = sql_formatted_date,
-                Status = description,
-                Price = provider_price,
-            )
+            ProviderID=provider_id,
+            CustomerID=customer_id,
+            # Type = ,
+            # Comment = ,
+            StartTime=sql_formatted_time,
+            EndTime=end,
+            AppDate=sql_formatted_date,
+            Status=description,
+            Price=provider_price,
+        )
         db.session.add(new_appointment)
         db.session.commit()
-    else:                                                   #add db commit for petappointment entry 
+    else:  # add db commit for petappointment entry
         pass
 
     return jsonify(
         result_text="You booked an appointment with {} on {} at {}. ".format(
-            provider_name, selected_date, selected_time, 
+            provider_name,
+            selected_date,
+            selected_time,
         )
     )
+
 
 # def get_provider_dropdown_values():
 #     today = date.today()
 #     d = timedelta(days=21)
 #     myDict = {}
 #     hours_list = ['12:00 AM', '01:00 AM', '02:00 AM', '03:00 AM', '04:00 AM', '05:00 AM', '06:00 AM', '07:00 AM', '08:00 AM',
-#                 '09:00 AM', '10:00 AM', '11:00 AM', '12:00 PM', '01:00 PM', '02:00 PM', '03:00 PM', '04:00 PM', '05:00 PM', 
+#                 '09:00 AM', '10:00 AM', '11:00 AM', '12:00 PM', '01:00 PM', '02:00 PM', '03:00 PM', '04:00 PM', '05:00 PM',
 #                 '06:00 PM', '07:00 PM', '08:00 PM', '09:00 PM', '10:00 PM', '11:00 PM']
 
 #     for i in range(21):
@@ -286,7 +326,7 @@ def process_data():
 #         # for hour in hours_list:
 #         myDict[str(datetime.datetime.strptime(str(new_date), "%Y-%m-%d").strftime("%A, %B %d %Y"))] = hours_list
 
-#     return myDict 
+#     return myDict
 
 
 # @views.route("/test", methods=["POST", "GET"])

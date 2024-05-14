@@ -18,7 +18,7 @@ from wtforms.validators import (
 )
 from .models import Provider, Customer
 from datetime import datetime
-from werkzeug.security import check_password_hash, generate_password_hash
+from werkzeug.security import check_password_hash
 
 
 class SignUpForm(FlaskForm):
@@ -79,7 +79,9 @@ class AccountForm(FlaskForm):
         "Confirm Password", validators=[EqualTo("new_password"), Optional()]
     )
     email = StringField("Email", validators=[DataRequired(), Email()])
-    number = StringField("Phone Number")
+    number = StringField(
+        "Phone Number", validators=[Optional(), Length(min=10, max=14)]
+    )
 
     submit = SubmitField("Update")
 
@@ -153,6 +155,3 @@ class BookingForm(FlaskForm):
             f"{date} {selected_time}", "%Y-%m-%d %I:%M"
         )
         return appointment_datetime
-
-
-# TODO: Review form

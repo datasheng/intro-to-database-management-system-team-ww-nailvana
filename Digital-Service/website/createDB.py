@@ -120,7 +120,8 @@ def check_provider(args):
     return results
 
 
-def get_revenue(args):
+# Display revenue and revenue breakdown functions
+def get_revenue(rev_type):
     mydb = mysql.connector.connect(
         host="localhost",
         user="root",
@@ -130,8 +131,17 @@ def get_revenue(args):
     )
     results = []
     mycursor = mydb.cursor()
-    mycursor.callproc("total_revenue", args)
+    if rev_type == "total":
+        mycursor.callproc("total_revenue")
+    elif rev_type == "nail":
+        mycursor.callproc("get_nail_rev", [None])
+    else:
+        mycursor.callproc("get_pet_rev", [None])
+
     for result in mycursor.stored_results():
         results.append(result.fetchall())
     mydb.close()
     return results
+
+
+print(get_revenue("pet"))
